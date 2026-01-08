@@ -1,0 +1,48 @@
+package com.oc.maker.create.avatar2.ui.tutorial
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.oc.maker.create.avatar2.databinding.ItemTutorialBinding
+
+
+class ViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var data = arrayListOf<com.oc.maker.create.avatar2.data.model.TutorialModel>()
+    fun getData(mData: List<com.oc.maker.create.avatar2.data.model.TutorialModel>) {
+        data = mData as ArrayList<com.oc.maker.create.avatar2.data.model.TutorialModel>
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        var binding = ItemTutorialBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is ViewHolder) {
+            holder.bind(position)
+        }
+    }
+
+    override fun getItemCount(): Int = data.size
+
+    inner class ViewHolder(val binding: ItemTutorialBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(position: Int) {
+            binding.mTutorialModel = data[position]
+            Glide.with(binding.imv)
+                .load(data[position].bg)
+                .encodeQuality(50)
+                .override(512)
+                .dontTransform()
+                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                .into(binding.imv)
+            binding.tv1.isSelected = false
+            binding.tv1.postDelayed({
+                binding.tv1.isSelected = true
+            }, 50)
+        }
+    }
+}
