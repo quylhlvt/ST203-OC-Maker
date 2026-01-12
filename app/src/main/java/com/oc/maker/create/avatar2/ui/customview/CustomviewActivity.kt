@@ -49,7 +49,8 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
     override fun onRestart() {
         super.onRestart()
     }
-
+    // Thêm map để cache index của icon (từ DataHelper.listImageSortView)
+    private val iconToIndexMap = mutableMapOf<String, Int>()
     override fun initView() {
         binding.txtContent.gradientHorizontal(
             "#01579B".toColorInt(),
@@ -123,17 +124,14 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
         posNav: Int? = null,
         posColor: Int? = null
     ) {
-        DataHelper.listImageSortView.forEachIndexed { _pos, _data ->
-            if (_data == icon) {
-                handleVisibility(
-                    listImg[_pos],
-                    pos,
-                    checkRestart,
-                    posNav,
-                    posColor
-                )
-                return@forEachIndexed
-            }
+        iconToIndexMap[icon]?.let { _pos ->
+            handleVisibility(
+                listImg[_pos],
+                pos,
+                checkRestart,
+                posNav,
+                posColor
+            )
         }
     }
     private fun handleVisibility(
@@ -178,6 +176,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 .map { it.toInt() }
             DataHelper.listImageSortView[x - 1] = it.icon
             DataHelper.listImage[y - 1] = it.icon
+            iconToIndexMap[it.icon] = x - 1
         }
         //thu tu navi
         DataHelper.listImage.forEachIndexed { index, icon ->
