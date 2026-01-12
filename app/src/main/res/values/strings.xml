@@ -37,7 +37,7 @@
     <string name="delete">Delete</string>
     <string name="haven_saved_it_yet_are_you_sure_to_exit">Haven’t saved it yet, are you sure to exit?</string>
     <string name="reset">Reset</string>
-    <string name="do_you_want_to_reset_all">Do you want to reset all?</string>
+    <string name="do_you_want_to_reset_all">Do you want to reset?</string>
     <string name="tv_no">No</string>
     <string name="are_you_sure_want_to_delete_this_item">Are you sure want to delete this item?</string>
     <string name="tv_yes">Yes</string>
@@ -66,10 +66,10 @@
     <string name="my_work">My OC</string>
     <string name="my_creation">My album</string>
     <string name="privacy_amp_policy"><![CDATA[Privacy & Policy]]></string>
-    <string name="please_check_your_network_connection">Please check your network connection.</string>
+    <string name="please_check_your_network_connection">Please check your network</string>
     <string name="reset_your_customize">Reset</string>
-    <string name="haven_t_saved_it_yet_do_you_want_to_exit">Haven’t saved it yet,do you want to exit?</string>
-    <string name="do_you_want_to_delete_this_item">Do you want to delete this item?</string>
+    <string name="haven_t_saved_it_yet_do_you_want_to_exit">Do you want to exit?</string>
+    <string name="do_you_want_to_delete_this_item">Do you want to delete?</string>
     <string name="please_wait_a_few_seconds_for_data_to_load">Please wait a few seconds for data to load.</string>
     <string name="image">Image</string>
     <string name="color">Color</string>

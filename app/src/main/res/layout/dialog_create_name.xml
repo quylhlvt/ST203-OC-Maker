@@ -24,7 +24,7 @@
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="center"
                 android:text="@string/create_package_name"
-                android:textColor="#52525B"
+                android:textColor="@color/app_color"
                 android:textSize="16sp" />
 
             <androidx.appcompat.widget.AppCompatEditText
@@ -60,12 +60,12 @@
                     android:layout_height="50dp"
                     android:layout_marginEnd="16dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_btn_rate"
+                    android:background="@drawable/bg_8_color"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:paddingVertical="8dp"
                     android:text="@string/no"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/app_color" />
 
                 <!--                tvYes-->
                 <TextView
@@ -73,7 +73,7 @@
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_btn_rate"
+                    android:background="@drawable/bg_btn_share_view"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:paddingVertical="8dp"

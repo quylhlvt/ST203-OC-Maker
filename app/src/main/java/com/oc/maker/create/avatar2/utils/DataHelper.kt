@@ -341,10 +341,14 @@ object DataHelper {
 
     fun getTextFontDefault(): ArrayList<com.oc.maker.create.avatar2.data.model.SelectedModel> {
         return arrayListOf(
-           SelectedModel(color = R.font.roboto_regular),
-           SelectedModel(color = R.font.aldrich),
-           SelectedModel(color = R.font.brush_script),
-           SelectedModel(color = R.font.nova_script),
+           SelectedModel(color = R.font.itim_regular),
+           SelectedModel(color = R.font.italianno_regular),
+           SelectedModel(color = R.font.kranky_regular),
+           SelectedModel(color = R.font.damion_regular),
+           SelectedModel(color = R.font.dynalight_regular),
+           SelectedModel(color = R.font.baloo2_regular),
+           SelectedModel(color = R.font.bubblegum_sans_regular),
+           SelectedModel(color = R.font.cherry_bomb_regular),
            SelectedModel(color = R.font.carattere),
            SelectedModel(color = R.font.digital_numbers),
            SelectedModel(color = R.font.dynalight),
