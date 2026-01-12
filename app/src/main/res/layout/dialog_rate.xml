@@ -96,6 +96,7 @@
                     app:cardBackgroundColor="@color/app_color"
                     app:cardCornerRadius="10dp">
                 <TextView
+                    android:id="@+id/btnVote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_bold"
@@ -123,7 +124,7 @@
                     android:id="@+id/btnCancal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
+                    android:fontFamily="@font/roboto_regular"
                     android:gravity="center"
                     android:paddingVertical="15dp"
                     android:text="@string/exit"

@@ -29,6 +29,27 @@ object SystemUtils {
             invalidate()
         }
     }
+    fun TextView.gradientHorizontal(
+        @ColorInt startColor: Int,
+        @ColorInt endColor: Int
+    ) {
+        post {
+            // Đảm bảo TextView đã layou
+            // t xong (height/width > 0)
+            if (width <= 0 || height <= 0) return@post
+
+            paint.shader = LinearGradient(
+                0f,          // startX: bắt đầu từ trái
+                0f,          // startY
+                width.toFloat(),  // endX: kết thúc ở bên phải
+                0f,          // endY: giữ nguyên chiều cao (không dọc)
+                intArrayOf(startColor, endColor),  // Mảng màu (từ start → end)
+                null,                              // positions (null = phân bố đều)
+                Shader.TileMode.CLAMP
+            )
+            invalidate()
+        }
+    }
 
     fun setLocale(context: Context) {
         val language = getPreLanguage(context)

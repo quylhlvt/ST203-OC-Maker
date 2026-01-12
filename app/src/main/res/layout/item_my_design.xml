@@ -12,11 +12,11 @@
         <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="40dp"
+            app:cardCornerRadius="16dp"
+            app:strokeWidth="0dp"
             android:background="@color/transparent"
             android:layout_marginHorizontal="8dp"
-            app:cardElevation="3dp"
-            android:layout_marginBottom="8dp"
+        android:layout_marginBottom="8dp"
             >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintDimensionRatio="1.56:2.1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -37,11 +37,10 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="40dp"
-                app:strokeWidth="5dp"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="0dp"
                 app:strokeColor="@color/white"
-                app:cardBackgroundColor="#FFF3D2"
-                android:outlineAmbientShadowColor="#1F000000"
+                app:cardBackgroundColor="@color/white"
                 >
 
                 <!--            imvImage-->
@@ -54,8 +53,8 @@
 
                 <ImageView
                     android:id="@+id/btnDelete"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:layout_width="27dp"
+                    android:layout_height="27dp"
                     android:layout_gravity="end"
                     android:layout_margin="18dp"
                     android:src="@drawable/imv_delete" />

@@ -28,6 +28,7 @@ import com.oc.maker.create.avatar2.custom.listener.listenerdraw.EditEvent
 import com.oc.maker.create.avatar2.custom.listener.listenerdraw.FlipEvent
 import com.oc.maker.create.avatar2.custom.listener.listenerdraw.OnDrawListener
 import com.oc.maker.create.avatar2.custom.listener.listenerdraw.ZoomEvent
+import com.oc.maker.create.avatar2.utils.DataHelper.dpToPx
 import java.util.Collections
 import kotlin.collections.get
 import kotlin.math.abs
@@ -709,6 +710,14 @@ open class DrawView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) :
         icon.y = y
         icon.getMatrix().reset()
 
+        // Thu nhỏ icon xuống 39dp
+
+        val targetSizePx = dpToPx(39)
+        val scaleX = targetSizePx / icon.width
+        val scaleY = targetSizePx / icon.height
+        val scale = minOf(scaleX, scaleY) // Giữ tỷ lệ aspect ratio
+
+        icon.getMatrix().postScale(scale, scale, icon.width / 2f, icon.height / 2f)
         icon.getMatrix().postRotate(rotation, icon.width / 2f, icon.height / 2f)
         icon.getMatrix().postTranslate(x - icon.width / 2f, y - icon.height / 2f)
     }

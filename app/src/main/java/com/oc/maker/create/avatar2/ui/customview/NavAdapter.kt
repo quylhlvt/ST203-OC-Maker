@@ -1,5 +1,6 @@
 package com.oc.maker.create.avatar2.ui.customview
 
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -35,11 +36,11 @@ class NavAdapter : AbsBaseAdapter<BodyPartModel, ItemNavigationBinding>(R.layout
         data:BodyPartModel,
         holder: RecyclerView.ViewHolder
     ) {
-        Glide.with(binding.root).load(data.icon).encodeQuality(50).override(512).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(binding.imv)
+        Glide.with(binding.root).load(data.icon).encodeQuality(90).override(256).diskCacheStrategy(DiskCacheStrategy.RESOURCE).into(binding.imv)
         if (posNav == position) {
-            binding.bg.setImageResource(R.drawable.bg_frame_custom_item_select)
+            binding.bg.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.FFCC00))
         } else {
-            binding.bg.setImageResource(R.drawable.bg_white_12)
+            binding.bg.setCardBackgroundColor(ContextCompat.getColor(binding.root.context,R.color.white))
         }
         binding.root.onClickCustom {
             onClick?.invoke(position)

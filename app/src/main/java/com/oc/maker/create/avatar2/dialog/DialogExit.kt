@@ -1,12 +1,16 @@
 package com.oc.maker.create.avatar2.dialog
 
 import android.app.Activity
+import android.graphics.Color
 import androidx.core.view.isVisible
 import com.oc.maker.create.avatar2.R
 import com.oc.maker.create.avatar2.databinding.DialogExitBinding
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientVertical
 import com.oc.maker.create.avatar2.utils.hide
 import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.show
+import androidx.core.graphics.toColorInt
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientHorizontal
 
 class DialogExit(context: Activity, var type: String) :
     com.oc.maker.create.avatar2.base.BaseDialog<DialogExitBinding>(context, false) {
@@ -14,6 +18,9 @@ class DialogExit(context: Activity, var type: String) :
     override fun getContentView(): Int = R.layout.dialog_exit
 
     override fun initView() {
+        binding.txtContent.gradientHorizontal(
+            "#01579B".toColorInt(),
+            "#2686C6".toColorInt())
         when(type){
             "exit" ->{
                 binding.txtTitle.text = context.getString(R.string.exit)

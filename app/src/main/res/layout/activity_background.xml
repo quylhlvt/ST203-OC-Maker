@@ -87,7 +87,7 @@
             android:id="@+id/navBottom"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:src="@drawable/bg_nav_custom"
+            android:src="@drawable/bg_nav_bg"
             android:gravity="center"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -207,18 +207,18 @@
                 android:gravity="center">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_weight="250"
+                    android:layout_weight="155"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginHorizontal="57dp">
+                    android:layout_marginHorizontal="22dp">
 
 
                     <FrameLayout
                         android:id="@+id/titleFame"
                         android:layout_width="0dp"
-                        android:layout_height="58dp"
+                        android:layout_height="41dp"
                         android:background="@drawable/bg_title_dialog"
-                        app:layout_constraintDimensionRatio="1.64:0.58"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         android:elevation="1dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -229,9 +229,9 @@
                             android:id="@+id/txtTitle"
                             android:gravity="center"
                             android:layout_marginHorizontal="0dp"
-                            android:textSize="20dp"
+                            android:textSize="18sp"
                             android:textColor="@color/white"
-                            android:fontFamily="@font/coda_extra_bold"
+                            android:fontFamily="@font/nunito_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:paddingBottom="5dp"
@@ -252,7 +252,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="-30dp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/nunito_regular"
                             android:gravity="center"
                             android:text="@string/wait_a_few_second"
                             android:textColor="@color/white"
@@ -274,36 +274,34 @@
                             app:lottie_rawRes="@raw/json_loading" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/btnNo"
                             android:layout_marginTop="15dp"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginBottom="20dp"
-                            android:background="@drawable/bg_btn_rate"
+                            android:background="@drawable/bg_8_color"
                             android:gravity="center"
                             android:text="@string/no"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_medium"
+                            android:textColor="@color/app_color"
+                            android:fontFamily="@font/nunito_regular"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1.00:0.36"
+                            app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toStartOf="@+id/btnYes"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtContent" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/btnYes"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
-                            android:background="@drawable/bg_btn_rate"
+                            android:background="@drawable/bg_btn_loading_yes"
                             android:gravity="center"
                             android:text="@string/tv_yes"
                             android:textColor="@color/white"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/roboto_medium"
-                            app:layout_constraintDimensionRatio="1.00:0.36"
+                            android:fontFamily="@font/nunito_regular"
+                            app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/btnNo"
                             app:layout_constraintTop_toTopOf="@+id/btnNo" />

@@ -40,7 +40,7 @@ class PartAdapter : AbsBaseAdapter<String, ItemPartBinding>(R.layout.item_part, 
         holder: RecyclerView.ViewHolder
     ) {
         binding.apply {
-            imageBgItem.setBackgroundResource( if (posPath == position) R.drawable.bg_frame_custom_item_select else R.drawable.bg_frame_custom_item_unselect)
+            materialCard.strokeColor= if (posPath == position) ContextCompat.getColor(binding.root.context,R.color._536585)else ContextCompat.getColor(binding.root.context,R.color._9DD4FF)
         }
         Glide.with(binding.imv).clear(binding.imv)
         // 🔴 BẮT BUỘC: scaleType cố định
@@ -68,8 +68,8 @@ class PartAdapter : AbsBaseAdapter<String, ItemPartBinding>(R.layout.item_part, 
     private fun loadImage(binding: ItemPartBinding, data: Any) {
         Glide.with(binding.imv)
             .load(data)
-            .encodeQuality(50)
-            .override(512)
+            .encodeQuality(90)
+            .override(256)
             .dontTransform()
             .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(binding.imv)

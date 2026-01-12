@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:elevation="-1dp"
             android:src="@drawable/img_bg_splash" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -38,6 +39,16 @@
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btnRevert"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_flip"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/btnSave"
+            app:layout_constraintHorizontal_chainStyle="spread" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -47,47 +58,39 @@
             app:layout_constraintEnd_toStartOf="@id/btnSave"
             app:layout_constraintStart_toEndOf="@id/imvBack"
             app:layout_constraintTop_toTopOf="@id/imvBack">
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnRevert"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/ic_flip"
-                android:visibility="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnReset"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_chainStyle="spread" />
+
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnReset"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_reset"
-                app:layout_constraintStart_toEndOf="@+id/btnRevert"
-                app:layout_constraintEnd_toStartOf="@+id/btnSee"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btnSee"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:visibility="gone"
-                android:src="@drawable/ic_show"
-                app:layout_constraintStart_toEndOf="@+id/btnReset"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
+
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/btnSee"-->
+<!--                android:layout_width="32dp"-->
+<!--                android:layout_height="32dp"-->
+<!--                android:visibility="gone"-->
+<!--                android:src="@drawable/ic_show"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/btnReset"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
         <RelativeLayout
             android:id="@+id/rl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="34dp"
             android:visibility="visible"
+            android:elevation="0dp"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@+id/imvBack">
+            app:layout_constraintTop_toBottomOf="@+id/btnRevert">
 
             <!--            <androidx.appcompat.widget.AppCompatImageView-->
             <!--                android:id="@+id/body"-->
@@ -102,27 +105,45 @@
             android:id="@+id/btnDice"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="10dp"
+            android:elevation="1dp"
+            android:layout_marginEnd="20dp"
             android:src="@drawable/imv_random"
-            app:layout_constraintBottom_toTopOf="@id/llColor"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@id/llColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/llColor" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imvShowColor"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:elevation="1dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="2dp"
+            android:src="@drawable/imv_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rl" />
 
         <LinearLayout
+            android:elevation="1dp"
             android:id="@+id/llColor"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="#80EFCEBF"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="40dp"
             android:gravity="start"
             android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rl"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintBottom_toBottomOf="@id/imvShowColor"
+            app:layout_constraintEnd_toStartOf="@id/btnDice"
+            app:layout_constraintStart_toEndOf="@id/imvShowColor"
+            app:layout_constraintTop_toTopOf="@id/imvShowColor">
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_8_color"
                 android:orientation="vertical"
+                app:cardCornerRadius="14dp"
                 app:strokeColor="#4C5AF2"
                 app:strokeWidth="0.5dp">
 
@@ -153,16 +174,17 @@
             android:id="@+id/llPart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/img_frame_bg_layer_custom"
             android:gravity="center"
             app:layout_constraintBottom_toTopOf="@id/llNav"
-            app:layout_constraintTop_toBottomOf="@id/llColor">
+            app:layout_constraintTop_toBottomOf="@id/btnDice">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvPart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="12dp"
+                android:layout_marginHorizontal="10dp"
                 android:layout_marginTop="8dp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
@@ -213,18 +235,18 @@
                 android:gravity="center">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_weight="250"
+                    android:layout_weight="155"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_marginHorizontal="57dp">
+                    android:layout_marginHorizontal="22dp">
 
 
                     <FrameLayout
                         android:id="@+id/titleFame"
                         android:layout_width="0dp"
-                        android:layout_height="58dp"
+                        android:layout_height="41dp"
                         android:background="@drawable/bg_title_dialog"
-                        app:layout_constraintDimensionRatio="1.64:0.58"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         android:elevation="1dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -235,9 +257,9 @@
                             android:id="@+id/txtTitle"
                             android:gravity="center"
                             android:layout_marginHorizontal="0dp"
-                            android:textSize="20dp"
+                            android:textSize="18sp"
                             android:textColor="@color/white"
-                            android:fontFamily="@font/coda_extra_bold"
+                            android:fontFamily="@font/nunito_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:paddingBottom="5dp"
@@ -258,10 +280,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="20dp"
                             android:layout_marginTop="-30dp"
-                            android:fontFamily="@font/roboto_medium"
+                            android:fontFamily="@font/nunito_regular"
                             android:gravity="center"
                             android:text="@string/wait_a_few_second"
-                            android:textColor="@color/white"
+                            android:textColor="@color/app_color"
                             android:textSize="16dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -280,36 +302,36 @@
                             app:lottie_rawRes="@raw/json_loading" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/btnNo"
                             android:layout_marginTop="15dp"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginBottom="20dp"
-                            android:background="@drawable/bg_btn_rate"
+                            android:background="@drawable/bg_8_color"
                             android:gravity="center"
                             android:text="@string/no"
-                            android:textColor="@color/white"
-                            android:fontFamily="@font/roboto_medium"
+                            android:visibility="gone"
+                            android:textColor="@color/app_color"
+                            android:fontFamily="@font/nunito_regular"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintDimensionRatio="1.00:0.36"
+                            app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toStartOf="@+id/btnYes"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/txtContent" />
 
                         <TextView
-                            android:visibility="gone"
                             android:id="@+id/btnYes"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
-                            android:background="@drawable/bg_btn_rate"
+                            android:background="@drawable/bg_btn_loading_yes"
                             android:gravity="center"
                             android:text="@string/tv_yes"
+                            android:visibility="gone"
                             android:textColor="@color/white"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/roboto_medium"
-                            app:layout_constraintDimensionRatio="1.00:0.36"
+                            android:fontFamily="@font/nunito_regular"
+                            app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/btnNo"
                             app:layout_constraintTop_toTopOf="@+id/btnNo" />

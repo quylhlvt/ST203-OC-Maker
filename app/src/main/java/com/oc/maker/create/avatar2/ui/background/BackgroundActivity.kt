@@ -32,6 +32,8 @@ import com.oc.maker.create.avatar2.ui.background.adapter.StikerAdapter
 import com.oc.maker.create.avatar2.ui.main.MainActivity
 import com.oc.maker.create.avatar2.ui.succes.SuccessActivity
 import com.oc.maker.create.avatar2.utils.DataHelper
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientHorizontal
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientVertical
 import com.oc.maker.create.avatar2.utils.dpToPx
 import com.oc.maker.create.avatar2.utils.hide
 import com.oc.maker.create.avatar2.utils.hideKeyboard
@@ -68,6 +70,9 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
     override fun getLayoutId(): Int = R.layout.activity_background
 
     override fun initView() {
+        binding.txtContent.gradientHorizontal(
+            "#01579B".toColorInt(),
+            "#2686C6".toColorInt())
         binding.txtTitle.isSelected = true
         if (DataHelper.arrBlackCentered.isEmpty()) {
 //            GlobalScope.launch(Dispatchers.IO) {
@@ -215,28 +220,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
                 hideKeyboard()
                 clearFocus()
             }
-            btnSee.onSingleClick {
-                hideKeyboard()
-                if (checkSee) {
-                    btnSee.setImageResource(R.drawable.imv_see_false)
-                    llBottom.inhide()
-                    imvBack.inhide()
-                    btnReset.inhide()
-                    btnSave.inhide()
-                    ctl.inhide()
-                    navBottom.inhide()
-                    clearFocus()
-                } else {
-                    btnSee.setImageResource(R.drawable.ic_show)
-                    llBottom.show()
-                    imvBack.show()
-                    btnSave.show()
-                    btnReset.show()
-                    ctl.show()
-                    navBottom.show()
-                }
-                checkSee = !checkSee
-            }
+
             btnBg.onSingleClick {
                 hideKeyboard()
                 btnBg.setImageResource(R.drawable.imv_bg_true)
@@ -289,7 +273,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
                     btnImage.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.white))
 
                     btnColor.setBackgroundResource(R.drawable.bg_custom_unchoose)
-                    btnColor.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.white))
+                    btnColor.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.app_color))
                 }
                 btnColor.onSingleClick {
                     rcvColor.show()
@@ -298,7 +282,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
                     btnColor.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.white))
 
                     btnImage.setBackgroundResource(R.drawable.bg_custom_unchoose)
-                    btnImage.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.white))
+                    btnImage.setTextColor(ContextCompat.getColor(this@BackgroundActivity, R.color.app_color))
                 }
             }
             imvBack.onSingleClick {

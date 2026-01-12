@@ -6,9 +6,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.graphics.toColorInt
 import androidx.core.view.isInvisible
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.oc.maker.create.avatar2.R
 import com.oc.maker.create.avatar2.base.AbsBaseActivity
 import com.oc.maker.create.avatar2.data.model.AvatarModel
@@ -17,6 +20,8 @@ import com.oc.maker.create.avatar2.databinding.ActivityCustomizeBinding
 import com.oc.maker.create.avatar2.dialog.DialogExit
 import com.oc.maker.create.avatar2.ui.background.BackgroundActivity
 import com.oc.maker.create.avatar2.utils.DataHelper
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientHorizontal
+import com.oc.maker.create.avatar2.utils.SystemUtils.gradientVertical
 import com.oc.maker.create.avatar2.utils.fromList
 import com.oc.maker.create.avatar2.utils.inhide
 import com.oc.maker.create.avatar2.utils.isInternetAvailable
@@ -26,11 +31,6 @@ import com.oc.maker.create.avatar2.utils.show
 import com.oc.maker.create.avatar2.utils.showToast
 import com.oc.maker.create.avatar2.utils.viewToBitmap
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-
 @AndroidEntryPoint
 class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
     val viewModel: CustomviewViewModel by viewModels()
@@ -45,35 +45,30 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
     val adapterPart by lazy {
         PartAdapter()
     }
-
     override fun getLayoutId(): Int = R.layout.activity_customize
-
-
     override fun onRestart() {
         super.onRestart()
     }
 
     override fun initView() {
+        binding.txtContent.gradientHorizontal(
+            "#01579B".toColorInt(),
+            "#2686C6".toColorInt())
         binding.btnSave.isSelected = true
-        binding.txtTitle.isSelected = true
         if (DataHelper.arrBlackCentered.size > 0) {
             binding.apply {
                 rcvPart.adapter = adapterPart
                 rcvPart.itemAnimator = null
-
-
                 rcvColor.adapter = adapterColor
                 rcvColor.itemAnimator = null
-
-
                 rcvNav.adapter = adapterNav
                 rcvNav.itemAnimator = null
-
                 getData1()
                 repeat(DataHelper.listImageSortView.size) {
                     listImg.add(AppCompatImageView(applicationContext).apply {
                         layoutParams = ViewGroup.LayoutParams(
-                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
                         )
                         binding.rl.addView(this)
                     })
@@ -83,32 +78,35 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
 
                 adapterColor.setPos(arrInt[0][1])
                 if (listData[adapterNav.posNav].listPath.size == 1) {
-                    binding.rcvColor.visibility = View.INVISIBLE
+                    binding.llColor.visibility = View.INVISIBLE
+                    binding.imvShowColor.visibility = View.INVISIBLE
                 } else {
-                    binding.rcvColor.visibility = View.VISIBLE
+                    binding.llColor.visibility = View.VISIBLE
+                    binding.imvShowColor.visibility = View.VISIBLE
                     adapterColor.submitList(listData[adapterNav.posNav].listPath)
                 }
-
-
                 adapterPart.setPos(arrInt[0][0])
                 adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
 
                 putImage(listData[adapterNav.posNav].icon, 1)
             }
-
             if (arrIntHottrend != null) {
                 listData.forEachIndexed { index, partBody ->
                     putImage(
-                        partBody.icon, arrInt[index][0], false, index, arrInt[index][1]
+                        partBody.icon,
+                        arrInt[index][0],
+                        false,
+                        index,
+                        arrInt[index][1]
                     )
                 }
                 adapterPart.setPos(arrInt[adapterNav.posNav][0])
                 adapterColor.setPos(arrInt[adapterNav.posNav][1])
                 adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
                 if (listData[adapterNav.posNav].listPath.size == 1) {
-                    binding.rcvColor.visibility = View.INVISIBLE
+                    binding.llColor.visibility = View.INVISIBLE
                 } else {
-                    binding.rcvColor.visibility = View.VISIBLE
+                    binding.llColor.visibility = View.VISIBLE
                     adapterColor.submitList(listData[adapterNav.posNav].listPath)
                 }
             }
@@ -128,18 +126,18 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
         DataHelper.listImageSortView.forEachIndexed { _pos, _data ->
             if (_data == icon) {
                 handleVisibility(
-                    listImg[_pos], pos, checkRestart, posNav, posColor
+                    listImg[_pos],
+                    pos,
+                    checkRestart,
+                    posNav,
+                    posColor
                 )
                 return@forEachIndexed
             }
         }
     }
-
-
     private fun handleVisibility(
-        view: ImageView,
-        pos: Int,
-        checkRestart: Boolean = false,
+        view: ImageView, pos: Int, checkRestart: Boolean = false,
         posNav: Int? = null,
         posColor: Int? = null
     ) {
@@ -147,15 +145,20 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             view.visibility = View.GONE
         } else {
             view.visibility = View.VISIBLE
-            Glide.with(applicationContext).load(
-                    listData[posNav ?: adapterNav.posNav].listPath[posColor
-                        ?: adapterColor.posColor].listPath[pos]
-                ).into(view)
+            Glide.with(applicationContext)
+                .load(
+                    listData[posNav ?: adapterNav.posNav]
+                        .listPath[posColor ?: adapterColor.posColor]
+                        .listPath[pos]
+                )
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH)
+                .skipMemoryCache(false)                     // Cache memory
+                .dontAnimate()
+                .into(view)
         }
     }
-
     var listData = arrayListOf<BodyPartModel>()
-
     //0 - path, 1 - color
     var arrInt = arrayListOf<ArrayList<Int>>()
     var blackCentered = 0
@@ -176,11 +179,9 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             DataHelper.listImageSortView[x - 1] = it.icon
             DataHelper.listImage[y - 1] = it.icon
         }
-
         //thu tu navi
         DataHelper.listImage.forEachIndexed { index, icon ->
-            var x =
-                DataHelper.arrBlackCentered[blackCentered].bodyPart.indexOfFirst { it.icon == icon }
+            var x = DataHelper.arrBlackCentered[blackCentered].bodyPart.indexOfFirst { it.icon == icon }
             var y = DataHelper.listImageSortView.indexOf(icon)
             if (x != -1) {
                 arrShowColor.add(true)
@@ -203,7 +204,6 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             }
         }
     }
-
     var checkRevert = true
     var checkHide = false
     override fun initAction() {
@@ -221,11 +221,11 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 }
                 putImage(listData[adapterNav.posNav].icon, adapterPart.posPath)
             } else {
-                DialogExit(
-                    this@CustomviewActivity, "network"
-                ).show()
+                showToast(
+                    applicationContext,
+                    R.string.please_check_your_network_connection
+                )
             }
-
         }
         adapterNav.onClick = {
             if (!DataHelper.arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(
@@ -237,16 +237,19 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 adapterColor.setPos(arrInt[it][1])
 
                 if (listData[adapterNav.posNav].listPath.size == 1) {
-                    binding.rcvColor.visibility = View.INVISIBLE
+                    binding.llColor.visibility = View.INVISIBLE
+                    binding.imvShowColor.visibility = View.INVISIBLE
                 } else {
                     if (arrShowColor[adapterNav.posNav]) {
-                        binding.rcvColor.show()
+                        binding.llColor.show()
                     } else {
-                        binding.rcvColor.inhide()
+                        binding.llColor.inhide()
                     }
+                    binding.imvShowColor.visibility = View.VISIBLE
                     adapterColor.submitList(listData[it].listPath)
                     binding.root.postDelayed(
-                        { binding.rcvColor.smoothScrollToPosition(arrInt[it][1]) }, 100
+                        { binding.rcvColor.smoothScrollToPosition(arrInt[it][1]) },
+                        100
                     )
                 }
                 if (adapterColor.posColor == arrInt[adapterNav.posNav][1]) {
@@ -256,15 +259,16 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 }
                 adapterPart.submitList(listData[it].listPath[adapterColor.posColor].listPath)
                 binding.root.postDelayed(
-                    { binding.rcvPart.smoothScrollToPosition(arrInt[it][0]) }, 100
+                    { binding.rcvPart.smoothScrollToPosition(arrInt[it][0]) },
+                    100
                 )
 
             } else {
-                DialogExit(
-                    this@CustomviewActivity, "network"
-                ).show()
+                showToast(
+                    applicationContext,
+                    R.string.please_check_your_network_connection
+                )
             }
-
         }
         adapterPart.onClick = { it, type ->
             if (!DataHelper.arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(
@@ -279,7 +283,6 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                         arrInt[adapterNav.posNav][1] = adapterColor.posColor
                         putImage(listData[adapterNav.posNav].icon, it, true)
                     }
-
                     "dice" -> {
                         when (listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath[0]) {
                             "none" -> {
@@ -299,7 +302,6 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                                     putImage(listData[adapterNav.posNav].icon, 2)
                                 }
                             }
-
                             "dice" -> {
                                 if (listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath.size > 2) {
                                     var x =
@@ -316,13 +318,13 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                                     arrInt[adapterNav.posNav][1] = adapterColor.posColor
                                     putImage(listData[adapterNav.posNav].icon, 1)
                                     showToast(
-                                        applicationContext, R.string.the_layer_have_only_one_item
+                                        applicationContext,
+                                        R.string.the_layer_have_only_one_item
                                     )
                                 }
                             }
                         }
                     }
-
                     else -> {
                         adapterPart.setPos(it)
                         adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
@@ -332,16 +334,26 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     }
                 }
             } else {
-                DialogExit(
-                    this@CustomviewActivity, "network"
-                ).show()
+                showToast(
+                    applicationContext,
+                    R.string.please_check_your_network_connection
+                )
             }
         }
         binding.apply {
+            imvShowColor.onSingleClick {
+                arrShowColor[adapterNav.posNav] = !arrShowColor[adapterNav.posNav]
+                if (arrShowColor[adapterNav.posNav]) {
+                    llColor.show()
+                } else {
+                    llColor.inhide()
+                }
+            }
             btnReset.onSingleClick {
 //                if(!arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(applicationContext)){
                 var dialog = DialogExit(
-                    this@CustomviewActivity, "reset"
+                    this@CustomviewActivity,
+                    "reset"
                 )
                 dialog.onClick = {
                     DataHelper.listImage.forEach {
@@ -358,10 +370,12 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     adapterColor.setPos(arrInt[adapterNav.posNav][1])
                     adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
                     if (listData[adapterNav.posNav].listPath.size == 1) {
-                        binding.rcvColor.visibility = View.INVISIBLE
+                        binding.llColor.visibility = View.INVISIBLE
+                        binding.imvShowColor.visibility = View.INVISIBLE
                     } else {
                         if (!checkHide) {
-                            binding.rcvColor.visibility = View.VISIBLE
+                            binding.llColor.visibility = View.VISIBLE
+                            binding.imvShowColor.visibility = View.VISIBLE
                             adapterColor.submitList(listData[adapterNav.posNav].listPath)
                         }
                     }
@@ -378,7 +392,8 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             }
             imvBack.onSingleClick {
                 var dialog = DialogExit(
-                    this@CustomviewActivity, "exit"
+                    this@CustomviewActivity,
+                    "exit"
                 )
                 dialog.onClick = {
                     finish()
@@ -431,14 +446,19 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                             }
                         }
                         putImage(
-                            partBody.icon, arrInt[index][0], false, index, arrInt[index][1]
+                            partBody.icon,
+                            arrInt[index][0],
+                            false,
+                            index,
+                            arrInt[index][1]
                         )
                     }
                     adapterPart.setPos(arrInt[adapterNav.posNav][0])
                     adapterColor.setPos(arrInt[adapterNav.posNav][1])
                     adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
                     if (listData[adapterNav.posNav].listPath.size == 1) {
-                        binding.rcvColor.visibility = View.INVISIBLE
+                        binding.llColor.visibility = View.INVISIBLE
+                        binding.imvShowColor.visibility = View.INVISIBLE
                     } else {
                         if (!checkHide) {
 //                                if (arrShowColor[adapterNav.posNav]) {
@@ -447,120 +467,105 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
 //                                    binding.llColor.inhide()
 //                                }
                             arrShowColor[adapterNav.posNav] = true
-                            binding.rcvColor.visibility = View.VISIBLE
+                            binding.llColor.visibility = View.VISIBLE
+                            binding.imvShowColor.visibility = View.VISIBLE
                             adapterColor.submitList(listData[adapterNav.posNav].listPath)
                         }
-
                     }
                 } else {
-                    DialogExit(
-                        this@CustomviewActivity, "network"
-                    ).show()
+                    showToast(
+                        applicationContext,
+                        R.string.please_check_your_network_connection
+                    )
                 }
             }
             llLoading.onSingleClick {
                 showToast(
-                    applicationContext, R.string.please_wait_a_few_seconds_for_data_to_load
+                    applicationContext,
+                    R.string.please_wait_a_few_seconds_for_data_to_load
                 )
             }
             btnSave.onSingleClick {
-                // Hiện loading trước
                 llLoading.visibility = View.VISIBLE
                 animationView.visibility = View.VISIBLE
-
-                // Delay nhỏ để UI loading được render trước
-                lifecycleScope.launch {
-                    delay(100) // Cho UI cập nhật
-                    // Chuyển công việc nặng sang background thread
-                    launch(Dispatchers.Default) {
-                        try {
-                            // Tạo bitmap từ view trên background thread
-                            val bitmap = withContext(Dispatchers.IO) {
-                                viewToBitmap(rl, 512)
-                            }
-
-                            // Lưu bitmap
-                            saveBitmap(
-                                this@CustomviewActivity,
-                                bitmap,
-                                intent.getStringExtra("fileName") ?: "",
-                                true
-                            ) { success, path, pathOld ->
-                                lifecycleScope.launch(Dispatchers.Main) {
-                                    llLoading.visibility = View.GONE
-                                    animationView.visibility = View.GONE
-
-                                    if (success) {
-                                        viewModel.deleteAvatar(pathOld)
-
-                                        // Tạo array lưu layer info
-                                        val layerData = arrayListOf<ArrayList<Int>>()
-                                        DataHelper.listImageSortView.forEachIndexed { _, icon ->
-                                            val index = DataHelper.listImage.indexOf(icon)
-                                            layerData.add(arrInt[index])
-                                        }
-
-                                        viewModel.addAvatar(
-                                            AvatarModel(
-                                                path,
-                                                DataHelper.arrBlackCentered[blackCentered].avt,
-                                                fromList(layerData)
-                                            )
-                                        )
-
-                                        startActivity(
-                                            Intent(
-                                                this@CustomviewActivity,
-                                                BackgroundActivity::class.java
-                                            ).putExtra("path", path)
-                                        )
-                                    } else {
-                                        showToast(
-                                            this@CustomviewActivity,
-                                            R.string.save_failed
-                                        )
-                                    }
-                                }
-                            }
-                        } catch (e: Exception) {
-                            withContext(Dispatchers.Main) {
-                                llLoading.visibility = View.GONE
-                                animationView.visibility = View.GONE
-                                showToast(
-                                    this@CustomviewActivity,
-                                    R.string.save_failed
-                                )
-                            }
+                val a = DataHelper.arrBlackCentered[blackCentered].avt.split("/")
+                var b = a[a.size - 2]
+                saveBitmap(
+                    this@CustomviewActivity, viewToBitmap(rl), intent.getStringExtra("fileName") ?: "", true
+                ) { it, path, pathOld ->
+                    if (it) {
+                        viewModel.deleteAvatar(pathOld)
+                        llLoading.visibility = View.GONE
+                        animationView.visibility = View.GONE
+                        //lop layer
+                        var x = arrayListOf<ArrayList<Int>>()
+                        DataHelper.listImageSortView.forEachIndexed { _pos, icon ->
+                            var y = DataHelper.listImage.indexOf(
+                                icon
+                            )
+                            x.add(arrInt[y])
                         }
+
+                        viewModel.addAvatar(
+                            AvatarModel(
+                                path, DataHelper.arrBlackCentered[blackCentered].avt, fromList(x)
+                            )
+                        )
+                        startActivity(
+                            Intent(
+                                this@CustomviewActivity, BackgroundActivity::class.java
+                            ).putExtra("path", path)
+                        )
+
+
+                    } else {
+                        llLoading.visibility = View.GONE
+                        animationView.visibility = View.GONE
+                        showToast(
+                            this@CustomviewActivity, R.string.save_failed
+                        )
                     }
                 }
             }
-            btnSee.onSingleClick {
-                if (llNav.isInvisible) {
-                    llColor.show()
-                    llPart.show()
-                    llNav.show()
-                    btnSee.setImageResource(R.drawable.ic_show)
-                } else {
-                    llColor.inhide()
-                    llPart.inhide()
-                    llNav.inhide()
-                    btnSee.setImageResource(R.drawable.imv_see_false)
-                }
-
-            }
+//            btnSee.onSingleClick {
+//                if (btnRevert.isInvisible) {
+//                    btnRevert.show()
+//                    btnReset.show()
+//                    btnSave.show()
+//                    if (listData[adapterNav.posNav].listPath.size > 1) {
+//                        if (arrShowColor[adapterNav.posNav]) {
+//                            binding.llColor.show()
+//                        }
+//                        imvShowColor.show()
+//                    }
+//                    if (countRandom < 3) {
+//                        btnDice.show()
+//                    }
+//                    llPart.show()
+//                    llNav.show()
+//                } else {
+//                    btnRevert.inhide()
+//                    btnReset.inhide()
+//                    btnSave.inhide()
+//                    imvShowColor.inhide()
+//                    llColor.inhide()
+//                    btnDice.inhide()
+//                    llPart.inhide()
+//                    llNav.inhide()
+//                    btnSee.setImageResource(R.drawable.imv_see_false)
+//                }
+//
+//            }
         }
+
     }
-
-
-        override fun onBackPressed() {
-        var dialog = DialogExit(
-            this@CustomviewActivity, "exit"
+    override fun onBackPressed() {
+        var dialog =DialogExit(
+            this@CustomviewActivity,
+            "exit"
         )
         dialog.onClick = {
             finish()
-
-
         }
         dialog.show()
     }

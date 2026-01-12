@@ -159,7 +159,8 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                         this@MyCreationActivity.binding.apply {
                     imvTickAll.show()
                             imvDelete.show()
-                            llBottom.show()
+
+                            layoutSticker.show()
                             if (arrCheckTick.size == arrPathAvatar.size) {
                                 imvTickAll.setImageResource(R.drawable.imv_tick_all_true)
                             }else{
@@ -263,7 +264,8 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
 
         binding.apply {
             tvTitle.isSelected = true
-            tvShare.isSelected = true
+            tvNoItem.isSelected = true
+//            tvShare.isSelected = true
             txtTelegram.isSelected = true
             txtWhatsapp.isSelected = true
             tvDownload.isSelected = true
@@ -278,7 +280,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
             adapterDesign.submitList(arrPathDesign)
             checkNull()
         }
-        updateLayoutSticker()
+//        updateLayoutSticker()
     }
 
     override fun onRestart() {
@@ -300,13 +302,14 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
         binding.imvTickAll.visibility = View.GONE
         binding.llBottom.visibility = View.GONE
         binding.imvDelete.visibility = View.GONE
+        binding.layoutSticker.visibility = View.GONE
         adapterAvatar.checkLongClick = false
         adapterDesign.checkLongClick = false
         adapterDesign.arrCheckTick.clear()
         adapterAvatar.arrCheckTick.clear()
         adapterAvatar.submitList(arrPathAvatar)
         adapterDesign.submitList(arrPathDesign)
-        updateLayoutSticker()
+//        updateLayoutSticker()
         checkNull()
         showSystemUI()
     }
@@ -457,43 +460,43 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
 
             }
 
-            btnShareAll.onClick {
-                if (checkAvatar) {
-                    if (adapterAvatar.arrCheckTick.isEmpty()) {
-                        showToast(
-                            this@MyCreationActivity,
-                            R.string.you_have_not_selected_anything_yet
-                        )
-                    } else {
-                        var listPath = arrayListOf<String>()
-                        adapterAvatar.arrCheckTick.forEach {
-                            listPath.add(arrPathAvatar[it])
-                        }
-                        shareListFiles(
-                            this@MyCreationActivity,
-                            listPath
-                        )
-                        hideLongClick()
-                    }
-                } else {
-                    if (adapterDesign.arrCheckTick.isEmpty()) {
-                        showToast(
-                            this@MyCreationActivity,
-                            R.string.you_have_not_selected_anything_yet
-                        )
-                    } else {
-                        var listPath = arrayListOf<String>()
-                        adapterDesign.arrCheckTick.forEach {
-                            listPath.add(arrPathDesign[it])
-                        }
-                        shareListFiles(
-                            this@MyCreationActivity,
-                            listPath
-                        )
-                        hideLongClick()
-                    }
-                }
-            }
+//            btnShareAll.onClick {
+//                if (checkAvatar) {
+//                    if (adapterAvatar.arrCheckTick.isEmpty()) {
+//                        showToast(
+//                            this@MyCreationActivity,
+//                            R.string.you_have_not_selected_anything_yet
+//                        )
+//                    } else {
+//                        var listPath = arrayListOf<String>()
+//                        adapterAvatar.arrCheckTick.forEach {
+//                            listPath.add(arrPathAvatar[it])
+//                        }
+//                        shareListFiles(
+//                            this@MyCreationActivity,
+//                            listPath
+//                        )
+//                        hideLongClick()
+//                    }
+//                } else {
+//                    if (adapterDesign.arrCheckTick.isEmpty()) {
+//                        showToast(
+//                            this@MyCreationActivity,
+//                            R.string.you_have_not_selected_anything_yet
+//                        )
+//                    } else {
+//                        var listPath = arrayListOf<String>()
+//                        adapterDesign.arrCheckTick.forEach {
+//                            listPath.add(arrPathDesign[it])
+//                        }
+//                        shareListFiles(
+//                            this@MyCreationActivity,
+//                            listPath
+//                        )
+//                        hideLongClick()
+//                    }
+//                }
+//            }
             btnTelegram.onClick {  // Assuming btnTelegram exists in your layout
                 handleTelegram()
             }
@@ -590,11 +593,11 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     checkAvatar = true
                     btnAvatar.setBackgroundResource(R.drawable.bg_btn_my_work)
                     btnAvatar.setTextColor(ContextCompat.getColor(this@MyCreationActivity,R.color.white))
-                    btnDesign.setTextColor(ContextCompat.getColor(this@MyCreationActivity,R.color.white))
+                    btnDesign.setTextColor(ContextCompat.getColor(this@MyCreationActivity,R.color.app_color))
                     btnDesign.setBackgroundResource(R.drawable.bg_btn_my_work_unselect)
                     rcvAvatar.show()
                     rcvDesign.hide()
-                    updateLayoutSticker()
+//                    updateLayoutSticker()
                     hideLongClick()
                 }
             }
@@ -604,10 +607,10 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     btnAvatar.setBackgroundResource(R.drawable.bg_btn_my_work_unselect)
                     btnDesign.setBackgroundResource(R.drawable.bg_btn_my_work)
                     btnDesign.setTextColor(  ContextCompat.getColor(this@MyCreationActivity,R.color.white))
-                    btnAvatar.setTextColor(  ContextCompat.getColor(this@MyCreationActivity,R.color.white))
+                    btnAvatar.setTextColor(  ContextCompat.getColor(this@MyCreationActivity,R.color.app_color))
                     rcvDesign.show()
                     rcvAvatar.hide()
-                    updateLayoutSticker()
+//                    updateLayoutSticker()
                     hideLongClick()
                 }
             }
@@ -891,9 +894,9 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
             }
         }
     }
-    private fun updateLayoutSticker() {
-        binding.layoutSticker.visibility =
-            if (checkAvatar && !arrPathAvatar.isEmpty()) View.VISIBLE else View.GONE
-    }
+//    private fun updateLayoutSticker() {
+//        binding.layoutSticker.visibility =
+//            if (checkAvatar && !arrPathAvatar.isEmpty()) View.VISIBLE else View.GONE
+//    }
 
 }

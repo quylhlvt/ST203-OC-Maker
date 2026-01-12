@@ -22,7 +22,7 @@
     <string name="create">CREATE</string>
     <string name="customize">CUSTOMIZE</string>
     <string name="save">Save</string>
-    <string name="wait_a_few_second">Wait a few second...</string>
+    <string name="wait_a_few_second">Wait a minute...</string>
     <string name="tv_cancel">Cancel</string>
     <string name="successfully">Successfully</string>
     <string name="successfully2">SUCCESSFULLY</string>
@@ -33,7 +33,7 @@
     <string name="pony_maker">OC Maker</string>
     <string name="trending_custom">Quick Maker</string>
     <string name="trending">Trending</string>
-    <string name="no_item_here">No Item Here</string>
+    <string name="no_item_here">No current history</string>
     <string name="delete">Delete</string>
     <string name="haven_saved_it_yet_are_you_sure_to_exit">Haven’t saved it yet, are you sure to exit?</string>
     <string name="reset">Reset</string>
@@ -63,8 +63,8 @@
     <string name="intro2">Character Diversity</string>
     <string name="intro3">Variety Items</string>
     <string name="you_have_not_selected_anything_yet">You have not selected any item yet</string>
-    <string name="my_work">My Work</string>
-    <string name="my_creation">My Creation</string>
+    <string name="my_work">My OC</string>
+    <string name="my_creation">My album</string>
     <string name="privacy_amp_policy"><![CDATA[Privacy & Policy]]></string>
     <string name="please_check_your_network_connection">Please check your network connection.</string>
     <string name="reset_your_customize">Reset</string>
@@ -76,8 +76,8 @@
     <string name="text">Text</string>
     <string name="type_your_content">Type your content...</string>
     <string name="font">Font</string>
-    <string name="avatar">My OC</string>
-    <string name="design">Design</string>
+    <string name="avatar">My Avatar</string>
+    <string name="design">My Design</string>
     <string name="download_successfully">File downloaded successfully to folder</string>
     <string name="file_deleted_successfully">File deleted successfully</string>
     <string name="download_failed">File download failed</string>
@@ -100,4 +100,7 @@
     <string name="edit">Edit</string>
     <string name="no_internet">No Internet</string>
     <string name="ok">OK</string>
+    <string name="background">Background</string>
+    <string name="sticker">Sticker</string>
+    <string name="speech_bubbles">Speech Bubbles</string>
 </resources>

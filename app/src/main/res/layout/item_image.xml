@@ -74,7 +74,7 @@
                         android:gravity="center"
                         android:text="@string/add_image"
                         android:fontFamily="@font/roboto_regular"
-                        android:textColor="#205ABE"
+                        android:textColor="@color/app_color"
                         android:textSize="10sp"
                         tools:ignore="SmallSp"
                         />

@@ -30,28 +30,38 @@
             android:layout_marginEnd="16dp"
             android:src="@drawable/imv_edit_2"
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
-            app:layout_constraintEnd_toStartOf="@id/imvDelete"
-            app:layout_constraintTop_toTopOf="@id/imvBack" />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imvDelete"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/imv_delete"
-            app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imv"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:id="@+id/imvDelete"-->
+<!--            android:layout_width="32dp"-->
+<!--            android:layout_height="32dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:src="@drawable/imv_delete"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/imvBack"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="@id/imvBack" />-->
+        <com.google.android.material.card.MaterialCardView
             app:layout_constraintBottom_toTopOf="@+id/llBottom"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintDimensionRatio="2.67:3.46"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginHorizontal="46dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imvBack" />
+            app:layout_constraintTop_toBottomOf="@id/imvBack"
+            android:layout_height="0dp"
+            app:cardBackgroundColor="@color/transparent"
+            app:cardCornerRadius="12dp"
+            app:strokeWidth="0dp"
+            android:layout_width="0dp"
+            >
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+          />
+        </com.google.android.material.card.MaterialCardView>
+
 
         <LinearLayout
             android:id="@+id/llBottom"
@@ -62,7 +72,7 @@
             android:paddingTop="26dp"
             android:paddingBottom="10dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/imvDelete"
             tools:layout_editor_absoluteX="8dp">
 
             <LinearLayout
@@ -72,26 +82,24 @@
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
                 android:paddingHorizontal="12dp"
-                android:background="@drawable/bg_btn_share"
+                android:background="@drawable/bg_btn_share_view"
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_share_my_creation" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:src="@drawable/ic_share_my_creation" />-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEditShare"
                     style="@style/single_marquee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/roboto_medium"
                     android:marqueeRepeatLimit="3"
-                    android:maxWidth="100dp"
                     android:paddingTop="2dp"
                     android:singleLine="true"
                     android:text="@string/share"
@@ -106,27 +114,25 @@
                 android:layout_height="50dp"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/bg_btn_share"
+                android:background="@drawable/bg_btn_share_view"
                 android:gravity="center"
                 android:paddingHorizontal="12dp"
                 android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_download_mywork" />
+<!--                <ImageView-->
+<!--                    android:layout_width="24dp"-->
+<!--                    android:layout_height="24dp"-->
+<!--                    android:src="@drawable/ic_download_mywork" />-->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvDownload"
                     style="@style/single_marquee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginHorizontal="8dp"
                     android:ellipsize="marquee"
                     android:fontFamily="@font/roboto_medium"
                     android:marqueeRepeatLimit="3"
-                    android:maxWidth="100dp"
                     android:paddingTop="2dp"
                     android:singleLine="true"
                     android:text="@string/download"
@@ -134,6 +140,22 @@
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/imvDelete"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:layout_marginHorizontal="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_delete_view"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:layout_marginBottom="120dp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/llBottom"
+            app:layout_constraintStart_toStartOf="@+id/llBottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
