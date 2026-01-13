@@ -1697,7 +1697,6 @@ fun saveBitmap(
             file.delete()
             file = File(imagesDir, fileName.replace(".png", "0.png"))
         }
-
         try {
             FileOutputStream(file).use { outputStream ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
@@ -1720,9 +1719,7 @@ fun saveBitmap(
             }
         }
     }
-
 }
-
 fun saveFileToExternalStorage(
     context: Context,
     sourcePath: String,
@@ -1732,11 +1729,9 @@ fun saveFileToExternalStorage(
     CoroutineScope(Dispatchers.IO).launch {
         try {
             val sourceFile = File(sourcePath)
-
             // Tạo tên file từ timestamp hiện tại
             val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val fileName = timestamp + sourceFile.name
-
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 // Android 10+ → MediaStore
                 val contentValues = ContentValues().apply {
@@ -1747,17 +1742,14 @@ fun saveFileToExternalStorage(
                         Environment.DIRECTORY_DOWNLOADS + "/" + context.getString(R.string.app_name)
                     )
                 }
-
                 val resolver = context.contentResolver
                 val uri = resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, contentValues)
-
                 if (uri != null) {
                     resolver.openOutputStream(uri)?.use { output ->
                         sourceFile.inputStream().use { input ->
                             input.copyTo(output)
                         }
                     }
-
                     withContext(Dispatchers.Main) {
                         success(true, uri.toString())
                     }

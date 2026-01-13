@@ -25,7 +25,7 @@ import kotlin.math.roundToInt
 object DataHelper {
     val TAG = "quylh"
     val ASSET: String = "file:///android_asset/"
-    var arrBlackCentered = arrayListOf<com.oc.maker.create.avatar2.data.model.CustomModel>()
+    var arrBlackCentered = arrayListOf<CustomModel>()
     var positionLanguageOld: Int = 0
     var check = true
 

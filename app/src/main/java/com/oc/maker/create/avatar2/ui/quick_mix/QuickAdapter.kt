@@ -113,7 +113,7 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
     ) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val canvasSize = 512
+                val canvasSize = 256
                 val merged = Bitmap.createBitmap(canvasSize, canvasSize, Bitmap.Config.ARGB_8888)
                 val canvas = Canvas(merged)
 
@@ -145,20 +145,13 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
                         if (!targetPath.isNullOrEmpty()) {
                             val layerBitmap = Glide.with(context)
                                 .asBitmap()
-                                .encodeQuality(10)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .load(targetPath)
+                                .override(256, 256)  // ← resize ngay từ nguồn, siêu quan trọng!
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .submit()
                                 .get()
-
-                            val srcRect = Rect(
-                                0,
-                                0,
-                                layerBitmap.width,
-                                layerBitmap.height
-                            )
-                            // scale về chung 512x512
-                            canvas.drawBitmap(layerBitmap, srcRect, dstRect, null)
+                            canvas.drawBitmap(layerBitmap, null, dstRect, null)
+                            layerBitmap.recycle()
                         }
                     }
                 }

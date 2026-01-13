@@ -12,7 +12,8 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="40dp"
+    app:cardCornerRadius="16dp"
+    app:strokeWidth="0dp"
     android:background="@color/transparent"
     android:layout_marginHorizontal="8dp"
     app:cardElevation="3dp"
@@ -38,18 +39,17 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="40dp"
-                app:strokeWidth="5dp"
-                app:strokeColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="0dp"
                 app:cardBackgroundColor="@color/white"
-                android:outlineAmbientShadowColor="#1F000000"
+                android:outlineAmbientShadowColor="#40000000"
                 >
                 <!--            imvImage-->
                 <ImageView
                     android:id="@+id/imv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/img_per" />
 
             </com.google.android.material.card.MaterialCardView>

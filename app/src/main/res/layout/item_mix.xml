@@ -11,7 +11,7 @@
         <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="40dp"
+            app:cardCornerRadius="16dp"
             android:background="@color/transparent"
             android:layout_marginHorizontal="8dp"
             app:cardElevation="3dp"
@@ -36,11 +36,8 @@
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="40dp"
-                app:strokeWidth="5dp"
-                app:strokeColor="@color/white"
-                app:cardBackgroundColor="#FFF3D2"
-                android:outlineAmbientShadowColor="#1F000000"
+                app:cardCornerRadius="16dp"
+                app:strokeWidth="0dp"
                 >
 
             <!--            imvImage-->
@@ -62,7 +59,7 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#DDDDDD" />
+                        android:background="@color/white" />
                 </com.facebook.shimmer.ShimmerFrameLayout>
             </com.google.android.material.card.MaterialCardView>
 

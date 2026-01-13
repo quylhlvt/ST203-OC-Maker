@@ -62,8 +62,8 @@
                 <!--        btnSelect-->
                 <ImageView
                     android:id="@+id/btnSelect"
-                    android:layout_width="26dp"
-                    android:layout_height="26dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="end"
                     android:layout_margin="18dp"
                     android:src="@drawable/imv_check_false"

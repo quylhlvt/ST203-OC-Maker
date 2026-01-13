@@ -46,15 +46,11 @@ class PartAdapter : AbsBaseAdapter<String, ItemPartBinding>(R.layout.item_part, 
         // 🔴 BẮT BUỘC: scaleType cố định
         binding.imv.scaleType = ImageView.ScaleType.CENTER_INSIDE
         // reset padding (KHÔNG dùng margin)
-        binding.imv.setPadding(0, 0, 0, 0)
         when (data) {
             "none" -> {
-
-                binding.imv.setPadding(20, 20, 20, 20)
                 loadImage(binding, R.drawable.ic_none)
             }
             "dice" -> {
-                binding.imv.setPadding(6, 6, 6, 6)
                 loadImage(binding, R.drawable.ic_random_layer)
             }
             else -> {

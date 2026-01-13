@@ -146,7 +146,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     }
 
                     "longclick" -> {
-                        this@MyCreationActivity.binding.rcvAvatar.setMargins(0,8.dp(this@MyCreationActivity),0,150)
+                        this@MyCreationActivity.binding.rcvAvatar.setMargins(8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),150)
                         checkLongClick = true
                         this@MyCreationActivity.checkLongClick = true
 
@@ -158,8 +158,8 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                         submitList(arrPathAvatar)
                         this@MyCreationActivity.binding.apply {
                     imvTickAll.show()
-                            imvDelete.show()
-
+//                            imvDelete.show()
+                            llBottom.show()
                             layoutSticker.show()
                             if (arrCheckTick.size == arrPathAvatar.size) {
                                 imvTickAll.setImageResource(R.drawable.imv_tick_all_true)
@@ -218,10 +218,9 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     }
 
                     "longclick" -> {
-                        this@MyCreationActivity.binding.rcvDesign.setMargins(0,8.dp(this@MyCreationActivity),0,10)
+                        this@MyCreationActivity.binding.rcvDesign.setMargins(8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),0)
                         checkLongClick = true
                         this@MyCreationActivity.checkLongClick = true
-
                         if(arrCheckTick.indexOf(pos)>-1){
                             arrCheckTick.remove(pos)
                         }else{
@@ -230,7 +229,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                         submitList(arrPathDesign)
                         this@MyCreationActivity.binding.apply {
                             imvTickAll.show()
-                            imvDelete.show()
+//                            imvDelete.show()
                             llBottom.show()
 
                             if (arrCheckTick.size == arrPathDesign.size) {
@@ -280,7 +279,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
             adapterDesign.submitList(arrPathDesign)
             checkNull()
         }
-//        updateLayoutSticker()
+        updateLayoutSticker()
     }
 
     override fun onRestart() {
@@ -295,13 +294,13 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
 
     var checkLongClick = false
     fun hideLongClick() {
-        this@MyCreationActivity.binding.rcvAvatar.setMargins(0,8.dp(this@MyCreationActivity),0,0)
-        this@MyCreationActivity.binding.rcvDesign.setMargins(0,8.dp(this@MyCreationActivity),0,0)
+        this@MyCreationActivity.binding.rcvAvatar.setMargins(8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),0)
+        this@MyCreationActivity.binding.rcvDesign.setMargins(8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),8.dp(this@MyCreationActivity),0)
         checkLongClick = false
         binding.imvTickAll.setImageResource(R.drawable.imv_tick_all_false)
         binding.imvTickAll.visibility = View.GONE
         binding.llBottom.visibility = View.GONE
-        binding.imvDelete.visibility = View.GONE
+//        binding.imvDelete.visibility = View.GONE
         binding.layoutSticker.visibility = View.GONE
         adapterAvatar.checkLongClick = false
         adapterDesign.checkLongClick = false
@@ -309,7 +308,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
         adapterAvatar.arrCheckTick.clear()
         adapterAvatar.submitList(arrPathAvatar)
         adapterDesign.submitList(arrPathDesign)
-//        updateLayoutSticker()
+        updateLayoutSticker()
         checkNull()
         showSystemUI()
     }
@@ -597,7 +596,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     btnDesign.setBackgroundResource(R.drawable.bg_btn_my_work_unselect)
                     rcvAvatar.show()
                     rcvDesign.hide()
-//                    updateLayoutSticker()
+                    updateLayoutSticker()
                     hideLongClick()
                 }
             }
@@ -610,7 +609,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                     btnAvatar.setTextColor(  ContextCompat.getColor(this@MyCreationActivity,R.color.app_color))
                     rcvDesign.show()
                     rcvAvatar.hide()
-//                    updateLayoutSticker()
+                    updateLayoutSticker()
                     hideLongClick()
                 }
             }
@@ -625,10 +624,6 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
         else{
                 arrPathAvatar as ArrayList
             }
-
-
-
-
         if (listPath.isEmpty()) {
             showToast(
                 this@MyCreationActivity,
@@ -894,9 +889,9 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
             }
         }
     }
-//    private fun updateLayoutSticker() {
-//        binding.layoutSticker.visibility =
-//            if (checkAvatar && !arrPathAvatar.isEmpty()) View.VISIBLE else View.GONE
-//    }
+    private fun updateLayoutSticker() {
+        binding.layoutSticker.visibility =
+            if (checkAvatar && !arrPathAvatar.isEmpty()) View.VISIBLE else View.GONE
+    }
 
 }
