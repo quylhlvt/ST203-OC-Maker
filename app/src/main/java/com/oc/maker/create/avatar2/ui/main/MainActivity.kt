@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import androidx.lifecycle.lifecycleScope
 import com.oc.maker.create.avatar2.R
 import com.oc.maker.create.avatar2.base.AbsBaseActivity
@@ -22,11 +25,13 @@ import com.oc.maker.create.avatar2.utils.DataHelper
 import com.oc.maker.create.avatar2.utils.DataHelper.getData
 import com.oc.maker.create.avatar2.utils.SharedPreferenceUtils
 import com.oc.maker.create.avatar2.utils.backPress
+import com.oc.maker.create.avatar2.utils.isInternetAvailable
 import com.oc.maker.create.avatar2.utils.newIntent
 import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -66,7 +71,6 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
         }
     }
 
-
     override fun initView() {
         binding.apply {
             tv1.isSelected = true
@@ -75,105 +79,105 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
         }
         val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         registerReceiver(networkReceiver, filter)
-//        DataHelper.arrDataOnline.observe(this) {
-//            it?.let {
-//                when (it.loadingStatus) {
-//                    LoadingStatus.Loading -> {
-//                        checkCallingDataOnline = true
-//                    }
-//
-//                    LoadingStatus.Success -> {
-//                        if (DataHelper.arrBlackCentered.isNotEmpty() && !DataHelper.arrBlackCentered[0].checkDataOnline) {
-//                            checkCallingDataOnline = false
-//                            val listA = (it as com.oc.maker.create.avatar2.data.callapi.reponse.DataResponse.DataSuccess).body ?: return@observe
-//                            checkCallingDataOnline = true
-//                            val sortedMap = listA
-//                                .toList() // Chuyển map -> list<Pair<String, List<X10>>>
-//                                .sortedBy { (_, list) ->
-//                                    list.firstOrNull()?.level ?: Int.MAX_VALUE
-//                                }
-//                                .toMap()
-//                            sortedMap.forEach { key, list ->
-//                                var a = arrayListOf<com.oc.maker.create.avatar2.data.model.BodyPartModel>()
-//                                list.forEachIndexed { index, x10 ->
-//                                    var b = arrayListOf<com.oc.maker.create.avatar2.data.model.ColorModel>()
-//                                    x10.colorArray.split(",").forEach { coler ->
-//                                        var c = arrayListOf<String>()
-//                                        if (coler == "") {
-//                                            for (i in 1..x10.quantity) {
-//                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${i}.png")
-//                                            }
-//                                            b.add(
-//                                                ColorModel(
-//                                                    "#",
-//                                                    c
-//                                                )
-//                                            )
-//                                        } else {
-//                                            for (i in 1..x10.quantity) {
-//                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${coler}/${i}.png")
-//                                            }
-//                                            b.add(
-//                                               ColorModel(
-//                                                    coler,
-//                                                    c
-//                                                )
-//                                            )
-//                                        }
-//                                    }
-//                                    a.add(
-//                                        BodyPartModel(
-//                                            "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/${x10.parts}/nav.png",
-//                                            b
-//                                        )
-//                                    )
-//                                }
-//                                var dataModel =
-//                                    CustomModel(
-//                                        "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/avatar.png",
-//                                        a,
-//                                        true
-//                                    )
-//                                dataModel.bodyPart.forEach { mbodyPath ->
-//                                    if (mbodyPath.icon.substringBeforeLast("/")
-//                                            .substringAfterLast("/").substringAfter("-") == "1"
-//                                    ) {
-//                                        mbodyPath.listPath.forEach {
-//                                            if (it.listPath[0] != "dice") {
-//                                                it.listPath.add(0, "dice")
-//                                            }
-//                                        }
-//                                    } else {
-//                                        mbodyPath.listPath.forEach {
-//                                            if (it.listPath[0] != "none") {
-//                                                it.listPath.add(0, "none")
-//                                                it.listPath.add(1, "dice")
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                                DataHelper.arrBlackCentered.add(0, dataModel)
-//                            }
-//                        }
-//                        checkCallingDataOnline = false
-//                    }
-//
-//                    LoadingStatus.Error -> {
-//                        checkCallingDataOnline = false
-//                    }
-//
-//                    else -> {
-//                        checkCallingDataOnline = true
-//                    }
-//                }
-//            }
-//        }
+        DataHelper.arrDataOnline.observe(this) {
+            it?.let {
+                when (it.loadingStatus) {
+                    LoadingStatus.Loading -> {
+                        checkCallingDataOnline = true
+                    }
+
+                    LoadingStatus.Success -> {
+                        if (DataHelper.arrBlackCentered.isNotEmpty() && !DataHelper.arrBlackCentered[0].checkDataOnline) {
+                            checkCallingDataOnline = false
+                            val listA = (it as com.oc.maker.create.avatar2.data.callapi.reponse.DataResponse.DataSuccess).body ?: return@observe
+                            checkCallingDataOnline = true
+                            val sortedMap = listA
+                                .toList() // Chuyển map -> list<Pair<String, List<X10>>>
+                                .sortedBy { (_, list) ->
+                                    list.firstOrNull()?.level ?: Int.MAX_VALUE
+                                }
+                                .toMap()
+                            sortedMap.forEach { key, list ->
+                                var a = arrayListOf<com.oc.maker.create.avatar2.data.model.BodyPartModel>()
+                                list.forEachIndexed { index, x10 ->
+                                    var b = arrayListOf<com.oc.maker.create.avatar2.data.model.ColorModel>()
+                                    x10.colorArray.split(",").forEach { coler ->
+                                        var c = arrayListOf<String>()
+                                        if (coler == "") {
+                                            for (i in 1..x10.quantity) {
+                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${i}.png")
+                                            }
+                                            b.add(
+                                                ColorModel(
+                                                    "#",
+                                                    c
+                                                )
+                                            )
+                                        } else {
+                                            for (i in 1..x10.quantity) {
+                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${coler}/${i}.png")
+                                            }
+                                            b.add(
+                                                ColorModel(
+                                                    coler,
+                                                    c
+                                                )
+                                            )
+                                        }
+                                    }
+                                    a.add(
+                                        BodyPartModel(
+                                            "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/${x10.parts}/nav.png",
+                                            b
+                                        )
+                                    )
+                                }
+                                var dataModel =
+                                    CustomModel(
+                                        "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/avatar.png",
+                                        a,
+                                        true
+                                    )
+                                dataModel.bodyPart.forEach { mbodyPath ->
+                                    if (mbodyPath.icon.substringBeforeLast("/")
+                                            .substringAfterLast("/").substringAfter("-") == "1"
+                                    ) {
+                                        mbodyPath.listPath.forEach {
+                                            if (it.listPath[0] != "dice") {
+                                                it.listPath.add(0, "dice")
+                                            }
+                                        }
+                                    } else {
+                                        mbodyPath.listPath.forEach {
+                                            if (it.listPath[0] != "none") {
+                                                it.listPath.add(0, "none")
+                                                it.listPath.add(1, "dice")
+                                            }
+                                        }
+                                    }
+                                }
+                                DataHelper.arrBlackCentered.add(0, dataModel)
+                            }
+                        }
+                        checkCallingDataOnline = false
+                    }
+
+                    LoadingStatus.Error -> {
+                        checkCallingDataOnline = false
+                    }
+
+                    else -> {
+                        checkCallingDataOnline = true
+                    }
+                }
+            }
+        }
     }
 
     override fun initAction() {
         binding.apply {
             btnCreate.onSingleClick {
-                if (!checkCallingDataOnline) {
+                if (isDataReady()) {
                     startActivity(
                         newIntent(
                             applicationContext,
@@ -187,15 +191,15 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                     )
                 }
             }
-            btnQuickMaker.onSingleClick {
-                if (!checkCallingDataOnline) {
-                        startActivity(
-                            newIntent(
-                                applicationContext,
-                               QuickMixActivity::class.java
-                            )
-                        )
 
+            btnQuickMaker.onSingleClick {
+                if (isDataReady()) {
+                    startActivity(
+                        newIntent(
+                            applicationContext,
+                            QuickMixActivity::class.java
+                        )
+                    )
                 } else {
                     showToast(
                         applicationContext,
@@ -204,21 +208,21 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                 }
             }
             btnMyAlbum.onSingleClick {
-                if (!checkCallingDataOnline) {
-                        startActivity(
-                            newIntent(
-                                applicationContext,
-                                MyCreationActivity::class.java
-                            )
+                if (isDataReady()) {
+                    startActivity(
+                        newIntent(
+                            applicationContext,
+                            MyCreationActivity::class.java
                         )
-
+                    )
                 } else {
                     showToast(
-                        applicationContext, R.string.please_wait_a_few_seconds_for_data_to_load
+                        applicationContext,
+                        R.string.please_wait_a_few_seconds_for_data_to_load
                     )
                 }
-
             }
+
             imvSetting.onSingleClick {
                 startActivity(
                     newIntent(
@@ -230,29 +234,15 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
         }
     }
 
-    override fun onRestart() {
-        super.onRestart()
-        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
-        registerReceiver(networkReceiver, filter)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        try {
-            unregisterReceiver(networkReceiver)
-        } catch (e: Exception) {
-
-        }
+    private fun isDataReady(): Boolean {
+        return DataHelper.arrBlackCentered.isNotEmpty()
     }
 
     override fun onBackPressed() {
         lifecycleScope.launch {
             backPress(
-                SharedPreferenceUtils(
-                    applicationContext
-                )
+                SharedPreferenceUtils(applicationContext)
             )
         }
-
     }
 }

@@ -12,6 +12,7 @@ import com.oc.maker.create.avatar2.utils.newIntent
 import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.showToast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,6 +32,13 @@ class CategoryActivity : AbsBaseActivity<ActivityCategoryBinding>() {
     }
 
     override fun initView() {
+        if (DataHelper.arrBlackCentered.size<2) {
+            DialogExit(
+                this@CategoryActivity,
+                "loadingnetwork"
+            ).show()
+        }
+
         if (DataHelper.arrBg.size == 0) {
 //            GlobalScope.launch(Dispatchers.IO) {
 //                getData(apiRepository)

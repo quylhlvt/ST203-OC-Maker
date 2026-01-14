@@ -358,7 +358,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
     @SuppressLint("ResourceAsColor")
     override fun initAction() {
         binding.apply {
-            root.onClick { hideLongClick()
+            root.onSingleClick { hideLongClick()
             }
             rcvAvatar.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
                 override fun onInterceptTouchEvent(
@@ -398,7 +398,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                 override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) {}
                 override fun onTouchEvent(recyclerView: RecyclerView, motionEvent: MotionEvent) {}
             })
-            imvBack.onClick {
+            imvBack.onSingleClick {
                 startActivity(
                     newIntent(
                         this@MyCreationActivity,
@@ -496,10 +496,10 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
 //                    }
 //                }
 //            }
-            btnTelegram.onClick {  // Assuming btnTelegram exists in your layout
+            btnTelegram.onSingleClick {  // Assuming btnTelegram exists in your layout
                 handleTelegram()
             }
-            btnWhatsApp.onClick {  // Assuming btnWhatsapp exists in your layout
+            btnWhatsApp.onSingleClick {  // Assuming btnWhatsapp exists in your layout
                 handleWhatsapp()
             }
 

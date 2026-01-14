@@ -87,7 +87,7 @@
     <string name="choose_color">Escolher cor</string>
     <string name="done">Concluído</string>
     <string name="null_edt">Digite um texto</string>
-    <string name="image_has_been_saved_successfully">Imagem salva com sucesso</string>
+    <string name="image_has_been_saved_successfully">O projeto foi salvo com sucesso!</string>
     <string name="category">Categoria</string>
     <string name="no_app_found_to_handle_this_action">Nenhum aplicativo encontrado</string>
     <string name="invalid_action_msg">Aplicativo não instalado</string>
@@ -104,4 +104,5 @@
     <string name="background">Fundo</string>
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Balões de fala</string>
+    <string name="please_connect_to_the_internet_to_download_more_data">Por favor, conecte-se à internet para baixar mais dados.</string>
 </resources>

@@ -87,7 +87,7 @@
     <string name="choose_color">Farbe wählen</string>
     <string name="done">Fertig</string>
     <string name="null_edt">Bitte Text eingeben</string>
-    <string name="image_has_been_saved_successfully">Bild erfolgreich gespeichert</string>
+    <string name="image_has_been_saved_successfully">Das Projekt wurde erfolgreich gespeichert!</string>
     <string name="category">Kategorie</string>
     <string name="no_app_found_to_handle_this_action">Keine App gefunden</string>
     <string name="invalid_action_msg">App nicht installiert</string>
@@ -104,4 +104,5 @@
     <string name="background">Hintergrund</string>
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Sprechblasen</string>
+    <string name="please_connect_to_the_internet_to_download_more_data">Bitte verbinden Sie sich mit dem Internet, um weitere Daten herunterzuladen.</string>
 </resources>

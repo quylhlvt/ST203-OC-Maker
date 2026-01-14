@@ -13,14 +13,14 @@ class ApiRepository @Inject constructor(private val apiHelper: ApiHelper) {
     suspend fun getFigure(): CharacterResponse? {
         try {
             BASE_URL = BASE_URL_1
-//            return apiHelper.apiMermaid1.getAllData()
-            return null
+            return apiHelper.apiMermaid1.getAllData()
+//            return null
         } catch (e: Exception) {
             Log.d(TAG, "getFigure: $e")
             try {
                 BASE_URL = BASE_URL_2
-                return null
-//                return apiHelper.apiMermaid2.getAllData()
+//                return null
+                return apiHelper.apiMermaid2.getAllData()
             } catch (e: Exception) {
                 Log.d(TAG, "getFigure: $e")
                 return null

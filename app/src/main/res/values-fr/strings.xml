@@ -96,9 +96,7 @@
     <string name="choose_color">Choisir une couleur</string>
     <string name="done">Terminé</string>
     <string name="null_edt">Veuillez saisir un texte</string>
-    <string name="image_has_been_saved_successfully">
-        Image enregistrée avec succès
-    </string>
+    <string name="image_has_been_saved_successfully">Le projet a été enregistré avec succès !</string>
     <string name="category">Catégorie</string>
     <string name="no_app_found_to_handle_this_action">
         Aucune application trouvée pour cette action
@@ -117,4 +115,5 @@
     <string name="background">Arrière plan</string>
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Bulles de dialogue</string>
+    <string name="please_connect_to_the_internet_to_download_more_data">Veuillez vous connecter à Internet pour télécharger plus de données.</string>
 </resources>

@@ -86,7 +86,7 @@
     <string name="choose_color">Choose Color</string>
     <string name="done">Done</string>
     <string name="null_edt">Please enter text</string>
-    <string name="image_has_been_saved_successfully">Image has been saved successfully!</string>
+    <string name="image_has_been_saved_successfully">The project has been saved successfully!</string>
     <string name="category">Category</string>
     <string name="no_app_found_to_handle_this_action">No app found to handle this action</string>
     <string name="invalid_action_msg">Application not installed</string>
@@ -103,4 +103,5 @@
     <string name="background">Background</string>
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Speech Bubbles</string>
+    <string name="please_connect_to_the_internet_to_download_more_data">Please connect to the internet to download more data</string>
 </resources>

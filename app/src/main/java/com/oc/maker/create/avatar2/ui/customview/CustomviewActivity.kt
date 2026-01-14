@@ -396,8 +396,6 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 )
                 dialog.onClick = {
                     finish()
-
-
                 }
                 dialog.show()
             }

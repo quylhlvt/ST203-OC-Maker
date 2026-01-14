@@ -23,6 +23,7 @@
             android:id="@+id/imvBack"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:elevation="1dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/ic_back_app"
@@ -47,6 +48,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="16dp"
+            android:elevation="1dp"
             app:layout_constraintTop_toBottomOf="@+id/btnSave"
             app:layout_constraintHorizontal_chainStyle="spread" />
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,6 +66,7 @@
                 android:id="@+id/btnReset"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:elevation="1dp"
                 android:src="@drawable/ic_reset"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

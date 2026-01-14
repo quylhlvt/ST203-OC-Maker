@@ -87,7 +87,7 @@
     <string name="choose_color">रंग चुनें</string>
     <string name="done">हो गया</string>
     <string name="null_edt">कृपया टेक्स्ट दर्ज करें</string>
-    <string name="image_has_been_saved_successfully">इमेज सफलतापूर्वक सेव हुई</string>
+    <string name="image_has_been_saved_successfully">प्रोजेक्ट सफलतापूर्वक सहेजा गया है!</string>
     <string name="category">श्रेणी</string>
     <string name="no_app_found_to_handle_this_action">कोई ऐप नहीं मिला</string>
     <string name="invalid_action_msg">ऐप इंस्टॉल नहीं है</string>
@@ -104,4 +104,5 @@
     <string name="background">पृष्ठभूमि</string>
     <string name="sticker">स्टिकर</string>
     <string name="speech_bubbles">स्पीच बबल्स</string>
+    <string name="please_connect_to_the_internet_to_download_more_data">अधिक डेटा डाउनलोड करने के लिए कृपया इंटरनेट से कनेक्ट करें।</string>
 </resources>

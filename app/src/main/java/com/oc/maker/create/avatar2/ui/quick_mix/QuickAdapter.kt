@@ -59,8 +59,8 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
                     binding.shimmer.hide()
                     Glide.with(binding.root.context)
                         .load(mergedBitmap)
-                        .encodeQuality(10)
-                        .override(512)
+                        .encodeQuality(80)
+                        .override(256)
                         .into(binding.imvImage)
                     arrBitmap[position] = mergedBitmap
                 }
@@ -76,8 +76,8 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
             Glide.with(binding.root.context)
                 .load(arrBitmap[position])
                 .placeholder(binding.imvImage.drawable) // Giữ ảnh hiện tại nếu có
-                .encodeQuality(20)
-                .override(512)
+                .encodeQuality(80)
+                .override(256)
                 .dontTransform()
                 .diskCacheStrategy(DiskCacheStrategy.ALL) // ✅ Không cache vì đã có arrBitmap
                 .into(binding.imvImage)
@@ -145,13 +145,21 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
                         if (!targetPath.isNullOrEmpty()) {
                             val layerBitmap = Glide.with(context)
                                 .asBitmap()
-                                .load(targetPath)
-                                .override(256, 256)  // ← resize ngay từ nguồn, siêu quan trọng!
+                                .encodeQuality(80)
+                                .override(256)
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .load(targetPath)
                                 .submit()
                                 .get()
-                            canvas.drawBitmap(layerBitmap, null, dstRect, null)
-                            layerBitmap.recycle()
+
+                            val srcRect = Rect(
+                                0,
+                                0,
+                                layerBitmap.width,
+                                layerBitmap.height
+                            )
+                            // scale về chung 512x512
+                            canvas.drawBitmap(layerBitmap, srcRect, dstRect, null)
                         }
                     }
                 }

@@ -97,7 +97,7 @@
             android:layout_marginTop="13dp"
             android:text="@string/image_has_been_saved_successfully"
             android:textColor="@color/app_color"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/cardImv" />
 
         <LinearLayout
@@ -134,7 +134,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:fontFamily="@font/roboto_medium"
-                    android:paddingTop="2dp"
                     android:text="@string/my_creation"
                     android:textColor="@color/white"
                     android:singleLine="true"
@@ -161,7 +160,7 @@
 <!--                    android:layout_height="24dp"-->
 <!--                    android:src="@drawable/ic_download_mywork" />-->
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <TextView
                     android:id="@+id/tvDownload"
                     style="@style/single_marquee"
                     android:layout_width="wrap_content"
@@ -170,14 +169,13 @@
                     android:ellipsize="marquee"
                     android:fontFamily="@font/roboto_medium"
                     android:marqueeRepeatLimit="3"
-                    android:paddingTop="2dp"
                     android:singleLine="true"
                     android:text="@string/download"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatTextView
+        <TextView
             android:id="@+id/imvShare"
             android:layout_width="match_parent"
             android:layout_height="51dp"

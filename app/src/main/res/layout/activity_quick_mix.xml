@@ -23,11 +23,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <com.oc.maker.create.avatar2.utils.StrokeAppCompatTextView
             android:id="@+id/titleQuick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/coda_extra_bold"
+            android:fontFamily="@font/cherry_bomb_one_regular
+"
             android:gravity="center"
             android:text="@string/trending_custom"
             android:singleLine="true"
@@ -36,14 +37,17 @@
             android:layout_marginHorizontal="80dp"
             android:ellipsize="marquee"
             android:marqueeRepeatLimit="marquee_forever"
-            android:textColor="@color/app_color"
-            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:strokeWidth="2dp"
+            app:strokeColor="@color/app_color"
+            />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv"

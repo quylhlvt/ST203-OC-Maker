@@ -42,6 +42,15 @@ class DialogExit(context: Activity, var type: String) :
                 binding.btnOk.show()
                 binding.txtContent.text = context.getString(R.string.please_check_your_network_connection)
             }
+            "loadingnetwork"->{
+                binding.txtTitle.text =
+                    context.getString(R.string.no_internet)
+                binding.txtTitle.isSelected = true
+                binding.btnYes.hide()
+                binding.btnNo.hide()
+                binding.btnOk.show()
+                binding.txtContent.text = context.getString(R.string.please_connect_to_the_internet_to_download_more_data)
+            }
             "reset"->{
                 binding.txtTitle.text = context.getString(R.string.reset)
                 binding.txtTitle.isSelected = true

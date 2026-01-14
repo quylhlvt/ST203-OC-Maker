@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
+            app:layout_constraintGuide_percent="0.61" />
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -131,7 +131,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="300dp"
             app:layout_constraintBottom_toTopOf="@id/llBottom">
 
             <LinearLayout
@@ -274,6 +274,7 @@
                             app:lottie_rawRes="@raw/json_loading" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/btnNo"
                             android:layout_marginTop="15dp"
                             android:layout_width="0dp"
@@ -292,6 +293,7 @@
                             app:layout_constraintTop_toBottomOf="@+id/txtContent" />
 
                         <TextView
+                            android:visibility="gone"
                             android:id="@+id/btnYes"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
