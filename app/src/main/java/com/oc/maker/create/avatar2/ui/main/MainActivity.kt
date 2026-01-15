@@ -16,6 +16,7 @@ import com.oc.maker.create.avatar2.data.model.BodyPartModel
 import com.oc.maker.create.avatar2.data.model.ColorModel
 import com.oc.maker.create.avatar2.data.model.CustomModel
 import com.oc.maker.create.avatar2.databinding.ActivityMainBinding
+import com.oc.maker.create.avatar2.dialog.DialogExit
 import com.oc.maker.create.avatar2.ui.category.CategoryActivity
 import com.oc.maker.create.avatar2.ui.my_creation.MyCreationActivity
 import com.oc.maker.create.avatar2.ui.quick_mix.QuickMixActivity
@@ -185,10 +186,15 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                         )
                     )
                 } else {
-                    showToast(
-                        applicationContext,
-                        R.string.please_wait_a_few_seconds_for_data_to_load
-                    )
+                    lifecycleScope.launch {
+                        val dialog= DialogExit(
+                            this@MainActivity,
+                            "awaitdata"
+                        )
+                        dialog.show()
+                        delay(1500)
+                        dialog.dismiss()
+                    }
                 }
             }
 
@@ -201,10 +207,15 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                         )
                     )
                 } else {
-                    showToast(
-                        applicationContext,
-                        R.string.please_wait_a_few_seconds_for_data_to_load
-                    )
+                    lifecycleScope.launch {
+                        val dialog= DialogExit(
+                            this@MainActivity,
+                            "awaitdata"
+                        )
+                        dialog.show()
+                        delay(1500)
+                        dialog.dismiss()
+                    }
                 }
             }
             btnMyAlbum.onSingleClick {
@@ -216,10 +227,15 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                         )
                     )
                 } else {
-                    showToast(
-                        applicationContext,
-                        R.string.please_wait_a_few_seconds_for_data_to_load
-                    )
+                    lifecycleScope.launch {
+                        val dialog= DialogExit(
+                            this@MainActivity,
+                            "awaitdata"
+                        )
+                        dialog.show()
+                        delay(1500)
+                        dialog.dismiss()
+                    }
                 }
             }
 

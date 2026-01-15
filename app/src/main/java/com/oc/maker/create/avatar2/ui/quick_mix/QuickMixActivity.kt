@@ -28,7 +28,7 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
     private val arrMix = arrayListOf<com.oc.maker.create.avatar2.data.model.CustomModel>()
     @Inject
     lateinit var apiRepository: com.oc.maker.create.avatar2.data.repository.ApiRepository
-    val adapter by lazy { QuickAdapter() }
+    val adapter by lazy { QuickAdapter(this@QuickMixActivity) }
 
     override fun getLayoutId(): Int = R.layout.activity_quick_mix
 
@@ -39,10 +39,12 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
         } else {
             binding.rcv.itemAnimator = null
             binding.rcv.adapter = adapter
-
+            if (!isInternetAvailable(this@QuickMixActivity)){
+                sizeMix = 25
+                loadOfflineLastCharacter()
+            }else{
             // load trang đầu tiên
             loadNextPage()
-
             // listener để load thêm khi scroll gần cuối
             binding.rcv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -56,7 +58,53 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
                     }
                 }
             })
+        }}
+    }
+    private fun loadOfflineLastCharacter() {
+        val lastModel = DataHelper.arrBlackCentered.lastOrNull() ?: return
+        val tempArrMix = arrayListOf<com.oc.maker.create.avatar2.data.model.CustomModel>()
+        val tempArrListImageSortView = mutableListOf<ArrayList<String>>()
+        val resultList = mutableListOf<ArrayList<ArrayList<Int>>>()
+
+        repeat(sizeMix) {
+            val list = ArrayList<String>().apply {
+                repeat(lastModel.bodyPart.size) { add("") }
+            }
+            lastModel.bodyPart.forEach {
+                val (x, _) = it.icon.substringBeforeLast("/")
+                    .substringAfterLast("/")
+                    .split("-")
+                    .map { it.toInt() }
+                list[x - 1] = it.icon
+            }
+            tempArrListImageSortView.add(list)
+
+            val i = arrayListOf<ArrayList<Int>>()
+            list.forEach { data ->
+                val x = lastModel.bodyPart.find { it.icon == data }
+                val pair = if (x != null) {
+                    val path = x.listPath[0].listPath
+                    val color = x.listPath
+                    val randomValue = if (path[0] == "none") {
+                        if (path.size > 3) (2 until path.size).random() else 2
+                    } else {
+                        if (path.size > 2) (1 until path.size).random() else 1
+                    }
+                    val randomColor = (0 until color.size).random()
+                    arrayListOf(randomValue, randomColor)
+                } else {
+                    arrayListOf(-1, -1)
+                }
+                i.add(pair)
+            }
+            resultList.add(i)
+            tempArrMix.add(lastModel)
         }
+
+        adapter.arrListImageSortView.addAll(tempArrListImageSortView)
+        adapter.listArrayInt.addAll(resultList)
+        arrMix.addAll(tempArrMix)
+        adapter.submitList(ArrayList(arrMix))
     }
 
     private fun loadNextPage() {

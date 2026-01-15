@@ -105,4 +105,6 @@
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Gelembung bicara</string>
     <string name="please_connect_to_the_internet_to_download_more_data">Silakan sambungkan ke internet untuk mengunduh lebih banyak data.</string>
+    <string name="data">Data</string>
+    <string name="rate_successful">Terima kasih telah memberi rating pada aplikasi kami</string>
 </resources>

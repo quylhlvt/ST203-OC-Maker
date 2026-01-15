@@ -11,6 +11,7 @@ import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.show
 import androidx.core.graphics.toColorInt
 import com.oc.maker.create.avatar2.utils.SystemUtils.gradientHorizontal
+import kotlinx.coroutines.delay
 
 class DialogExit(context: Activity, var type: String) :
     com.oc.maker.create.avatar2.base.BaseDialog<DialogExitBinding>(context, false) {
@@ -49,7 +50,7 @@ class DialogExit(context: Activity, var type: String) :
                 binding.btnYes.hide()
                 binding.btnNo.hide()
                 binding.btnOk.show()
-                binding.txtContent.text = context.getString(R.string.please_connect_to_the_internet_to_download_more_data)
+                binding.txtContent.text = context.getString(R.string.please_check_your_network_connection)
             }
             "reset"->{
                 binding.txtTitle.text = context.getString(R.string.reset)
@@ -60,6 +61,15 @@ class DialogExit(context: Activity, var type: String) :
                 binding.txtTitle.text = context.getString(R.string.delete)
                 binding.txtTitle.isSelected = true
                 binding.txtContent.text = context.getString(R.string.do_you_want_to_delete_this_item)
+            }
+            "awaitdata"->{
+                binding.btnYes.hide()
+                binding.btnNo.hide()
+                binding.txtTitle.text = context.getString(R.string.data)
+                binding.txtTitle.isSelected = true
+                binding.txtContent.hide()
+                binding.txtContent1.show()
+                binding.txtContent1.text = context.getString(R.string.please_wait_a_few_seconds_for_data_to_load)
             }
         }
     }

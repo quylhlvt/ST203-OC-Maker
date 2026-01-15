@@ -275,6 +275,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/llBottom"
             android:layout_width="0dp"
             android:layout_marginBottom="10dp"

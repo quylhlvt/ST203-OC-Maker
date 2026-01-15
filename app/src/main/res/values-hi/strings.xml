@@ -105,4 +105,6 @@
     <string name="sticker">स्टिकर</string>
     <string name="speech_bubbles">स्पीच बबल्स</string>
     <string name="please_connect_to_the_internet_to_download_more_data">अधिक डेटा डाउनलोड करने के लिए कृपया इंटरनेट से कनेक्ट करें।</string>
+    <string name="data">डेटा</string>
+    <string name="rate_successful">हमारे ऐप को रेट करने के लिए धन्यवाद</string>
 </resources>

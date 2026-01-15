@@ -105,4 +105,6 @@
     <string name="sticker">Sticker</string>
     <string name="speech_bubbles">Burbujas de diálogo</string>
     <string name="please_connect_to_the_internet_to_download_more_data">Por favor, conéctese a Internet para descargar más datos.</string>
+    <string name="data">Datos</string>
+    <string name="rate_successful">Gracias por calificar nuestra aplicación</string>
 </resources>

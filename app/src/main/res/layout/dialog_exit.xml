@@ -40,13 +40,40 @@
                     android:text="@string/loading"/>
 
             </FrameLayout>
+
+            <TextView
+                android:visibility="gone"
+                android:elevation="1dp"
+                android:id="@+id/txtContent1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:fontFamily="@font/nunito_regular"
+                android:gravity="center"
+                android:text="@string/haven_t_saved_it_yet_do_you_want_to_exit"
+                android:textColor="@color/app_color"
+                android:textSize="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/titleFame"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@drawable/bg_dialog"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/bg"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/bg_dialog"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/titleFame">
 
                 <TextView
                     android:id="@+id/txtContent"

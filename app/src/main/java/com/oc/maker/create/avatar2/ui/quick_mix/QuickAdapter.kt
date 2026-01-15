@@ -1,5 +1,6 @@
 package com.oc.maker.create.avatar2.ui.quick_mix
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,8 +11,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.oc.maker.create.avatar2.R
 import com.oc.maker.create.avatar2.databinding.ItemMixBinding
+import com.oc.maker.create.avatar2.dialog.DialogExit
 import com.oc.maker.create.avatar2.utils.DataHelper
 import com.oc.maker.create.avatar2.utils.hide
+import com.oc.maker.create.avatar2.utils.isInternetAvailable
 import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.show
 import com.oc.maker.create.avatar2.utils.showToast
@@ -20,9 +23,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.maker.create.avatar2.data.model.CustomModel, ItemMixBinding>(
+class QuickAdapter(activity: Activity) : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.maker.create.avatar2.data.model.CustomModel, ItemMixBinding>(
     R.layout.item_mix, DiffCallBack()
 ) {
+    var act = activity
     var arrListImageSortView = arrayListOf<ArrayList<String>>()
     val arrBitmap = hashMapOf<Int, Bitmap>()
     var onCLick: ((Int) -> Unit)? = null
@@ -40,11 +44,15 @@ class QuickAdapter : com.oc.maker.create.avatar2.base.AbsBaseAdapter<com.oc.make
             // ✅ Chưa có cache - Clear ảnh cũ và cancel request
             Glide.with(binding.root.context).clear(binding.imvImage)
             binding.imvImage.setImageDrawable(null)
-
+            Glide.with(binding.root.context).load(data.avt).encodeQuality(80).override(256).into(binding.imvImage)
             binding.shimmer.startShimmer()
             binding.shimmer.show()
 
             binding.shimmer.onSingleClick {
+                if (!isInternetAvailable(this.act)){
+                    DialogExit(this.act, "network").show()
+                    return@onSingleClick
+                }
                 showToast(
                     binding.root.context,
                     R.string.wait_a_few_second

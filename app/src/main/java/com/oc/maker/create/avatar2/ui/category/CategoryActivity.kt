@@ -32,7 +32,7 @@ class CategoryActivity : AbsBaseActivity<ActivityCategoryBinding>() {
     }
 
     override fun initView() {
-        if (DataHelper.arrBlackCentered.size<2) {
+        if (DataHelper.arrBlackCentered.size<2 && !isInternetAvailable(this@CategoryActivity)) {
             DialogExit(
                 this@CategoryActivity,
                 "loadingnetwork"

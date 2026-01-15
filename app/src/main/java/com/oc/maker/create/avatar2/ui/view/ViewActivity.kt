@@ -17,6 +17,7 @@ import com.oc.maker.create.avatar2.utils.DataHelper
 import com.oc.maker.create.avatar2.utils.checkPermision
 import com.oc.maker.create.avatar2.utils.checkUsePermision
 import com.oc.maker.create.avatar2.utils.hide
+import com.oc.maker.create.avatar2.utils.isInternetAvailable
 import com.oc.maker.create.avatar2.utils.onSingleClick
 import com.oc.maker.create.avatar2.utils.requesPermission
 import com.oc.maker.create.avatar2.utils.saveFileToExternalStorage
@@ -55,6 +56,7 @@ class ViewActivity : AbsBaseActivity<ActivityViewBinding>() {
             imvBack.onSingleClick { finish() }
             imvEdit.onSingleClick {
                 viewModel.getAvatar(path) { avatar ->
+
                     if (avatar != null) {
                         var a =
                             DataHelper.arrBlackCentered.indexOfFirst { it.avt == avatar.pathAvatar }
@@ -77,10 +79,22 @@ class ViewActivity : AbsBaseActivity<ActivityViewBinding>() {
                             )
 
                         } else {
-                            DialogExit(
-                                this@ViewActivity,
-                                "network"
-                            ).show()
+                            if (!isInternetAvailable(this@ViewActivity)){
+                                DialogExit(
+                                    this@ViewActivity,
+                                    "loadingnetwork"
+                                ).show()
+                                return@getAvatar
+                            }
+                            lifecycleScope.launch {
+                                val dialog= DialogExit(
+                                    this@ViewActivity,
+                                    "awaitdata"
+                                )
+                                dialog.show()
+                                delay(1500)
+                                dialog.dismiss()
+                            }
                         }
                     }
                 }

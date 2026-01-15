@@ -20,6 +20,7 @@ import com.oc.maker.create.avatar2.databinding.ActivityCustomizeBinding
 import com.oc.maker.create.avatar2.dialog.DialogExit
 import com.oc.maker.create.avatar2.ui.background.BackgroundActivity
 import com.oc.maker.create.avatar2.utils.DataHelper
+import com.oc.maker.create.avatar2.utils.DataHelper.arrBlackCentered
 import com.oc.maker.create.avatar2.utils.SystemUtils.gradientHorizontal
 import com.oc.maker.create.avatar2.utils.SystemUtils.gradientVertical
 import com.oc.maker.create.avatar2.utils.fromList
@@ -349,7 +350,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 }
             }
             btnReset.onSingleClick {
-//                if(!arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(applicationContext)){
+                if(!arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(applicationContext)){
                 var dialog = DialogExit(
                     this@CustomviewActivity,
                     "reset"
@@ -385,9 +386,9 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
 
                 }
                 dialog.show()
-//                }else{
-//                    showToast(applicationContext,R.string.please_check_your_network_connection)
-//                }
+                }else{
+                    showToast(applicationContext,R.string.please_check_your_network_connection)
+                }
             }
             imvBack.onSingleClick {
                 var dialog = DialogExit(

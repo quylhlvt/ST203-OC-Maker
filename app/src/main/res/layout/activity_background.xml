@@ -25,6 +25,7 @@
             android:layout_height="32dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
+            android:elevation="1dp"
             android:src="@drawable/ic_back_app"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,6 +34,7 @@
             android:id="@+id/btnSave"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:elevation="1dp"
             android:layout_marginEnd="16dp"
             android:src="@drawable/ic_save"
             android:adjustViewBounds="true"
@@ -44,6 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:elevation="1dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toStartOf="@id/btnSave"
@@ -56,6 +59,7 @@
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:src="@drawable/ic_reset"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -67,10 +71,10 @@
 
         <com.oc.maker.create.avatar2.custom.DrawView
             android:id="@+id/drawView"
-            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_width="0dp"
             android:layout_height="0dp"
             android:layerType="hardware"
-            android:layout_marginBottom="30dp"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

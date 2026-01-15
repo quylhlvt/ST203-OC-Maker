@@ -53,6 +53,11 @@ class DialogRate(context: Activity) : com.oc.maker.create.avatar2.base.BaseDialo
                     SharedPreferenceUtils.Companion.getInstance(context).putBooleanValue(
                         RATE, true)
                     onPress.rating()
+                    Toast.makeText(
+                        context,
+                        context.getText(R.string.rate_successful),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

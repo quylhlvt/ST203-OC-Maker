@@ -2,11 +2,14 @@ package com.oc.maker.create.avatar2.ui.my_creation
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.util.Log
@@ -17,8 +20,13 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.oc.maker.create.avatar2.R
+import com.oc.maker.create.avatar2.data.callapi.reponse.LoadingStatus
+import com.oc.maker.create.avatar2.data.model.BodyPartModel
+import com.oc.maker.create.avatar2.data.model.ColorModel
+import com.oc.maker.create.avatar2.data.model.CustomModel
 import com.oc.maker.create.avatar2.databinding.ActivityMyCreationBinding
 import com.oc.maker.create.avatar2.dialog.CreateNameDialog
 import com.oc.maker.create.avatar2.dialog.DialogExit
@@ -31,10 +39,12 @@ import com.oc.maker.create.avatar2.utils.CONST.NAME_SAVE_FILE
 import com.oc.maker.create.avatar2.utils.CONST.REQUEST_STORAGE_PERMISSION
 import com.oc.maker.create.avatar2.utils.DataHelper
 import com.oc.maker.create.avatar2.utils.DataHelper.dp
+import com.oc.maker.create.avatar2.utils.DataHelper.getData
 import com.oc.maker.create.avatar2.utils.DataHelper.setMargins
 import com.oc.maker.create.avatar2.utils.PermissionHelper.checkPermissions
 import com.oc.maker.create.avatar2.utils.SharedPreferenceUtils
 import com.oc.maker.create.avatar2.utils.hide
+import com.oc.maker.create.avatar2.utils.isInternetAvailable
 import com.oc.maker.create.avatar2.utils.newIntent
 import com.oc.maker.create.avatar2.utils.onClick
 import com.oc.maker.create.avatar2.utils.onClickCustom
@@ -54,15 +64,50 @@ import com.oc.maker.create.avatar2.utils.showToast
 import com.oc.maker.create.avatar2.utils.toList
 
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() {
+    @Inject
+    lateinit var apiRepository: com.oc.maker.create.avatar2.data.repository.ApiRepository
+    var checkCallingDataOnline = false
     val viewModel: com.oc.maker.create.avatar2.ui.customview.CustomviewViewModel by viewModels()
     var checkAvatar = true
     private val permissionViewModel: PermissionViewModel by viewModels()
+    private var networkReceiver: BroadcastReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val connectivityManager =
+                context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val networkInfo = connectivityManager.activeNetworkInfo
+            if (!checkCallingDataOnline) {
+                if (networkInfo != null && networkInfo.isConnected) {
+                    var checkDataOnline = false
+                    DataHelper.arrBlackCentered.forEach {
+                        if (it.checkDataOnline) {
+                            checkDataOnline = true
+                            return@forEach
+                        }
+                    }
+                    if (!checkDataOnline) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            getData(apiRepository)
+                        }
+                    }
+                } else {
+                    if (DataHelper.arrBlackCentered.isEmpty()) {
+                        lifecycleScope.launch(Dispatchers.IO) {
+                            getData(apiRepository)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     @Inject
     lateinit var sharedPreference: SharedPreferenceUtils
@@ -103,6 +148,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
 
                     "edit" -> {
                         viewModel.getAvatar(arrPathAvatar[pos]) { avatar ->
+
                             if (avatar != null) {
                                 var a =
                                     DataHelper.arrBlackCentered.indexOfFirst { it.avt == avatar.pathAvatar }
@@ -128,10 +174,22 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                                     )
 
                                 } else {
-                                    DialogExit(
-                                        this@MyCreationActivity,
-                                        "network"
-                                    ).show()
+                                    if (!isInternetAvailable(this@MyCreationActivity)){
+                                        DialogExit(
+                                            this@MyCreationActivity,
+                                            "loadingnetwork"
+                                        ).show()
+                                        return@getAvatar
+                                    }
+                                    lifecycleScope.launch {
+                                        val dialog= DialogExit(
+                                            this@MyCreationActivity,
+                                            "awaitdata"
+                                        )
+                                        dialog.show()
+                                        delay(1500)
+                                        dialog.dismiss()
+                                    }
                                 }
 
                             } else {
@@ -159,7 +217,7 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
                         this@MyCreationActivity.binding.apply {
                     imvTickAll.show()
 //                            imvDelete.show()
-                            llBottom.show()
+//                            llBottom.show()
                             layoutSticker.show()
                             if (arrCheckTick.size == arrPathAvatar.size) {
                                 imvTickAll.setImageResource(R.drawable.imv_tick_all_true)
@@ -280,6 +338,101 @@ class MyCreationActivity : WhatsappSharingActivity<ActivityMyCreationBinding>() 
             checkNull()
         }
         updateLayoutSticker()
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(networkReceiver, filter)
+        DataHelper.arrDataOnline.observe(this) {
+            it?.let {
+                when (it.loadingStatus) {
+                    LoadingStatus.Loading -> {
+                        checkCallingDataOnline = true
+                    }
+
+                    LoadingStatus.Success -> {
+                        if (DataHelper.arrBlackCentered.isNotEmpty() && !DataHelper.arrBlackCentered[0].checkDataOnline) {
+                            checkCallingDataOnline = false
+                            val listA = (it as com.oc.maker.create.avatar2.data.callapi.reponse.DataResponse.DataSuccess).body ?: return@observe
+                            checkCallingDataOnline = true
+                            val sortedMap = listA
+                                .toList() // Chuyển map -> list<Pair<String, List<X10>>>
+                                .sortedBy { (_, list) ->
+                                    list.firstOrNull()?.level ?: Int.MAX_VALUE
+                                }
+                                .toMap()
+                            sortedMap.forEach { key, list ->
+                                var a = arrayListOf<com.oc.maker.create.avatar2.data.model.BodyPartModel>()
+                                list.forEachIndexed { index, x10 ->
+                                    var b = arrayListOf<com.oc.maker.create.avatar2.data.model.ColorModel>()
+                                    x10.colorArray.split(",").forEach { coler ->
+                                        var c = arrayListOf<String>()
+                                        if (coler == "") {
+                                            for (i in 1..x10.quantity) {
+                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${i}.png")
+                                            }
+                                            b.add(
+                                                ColorModel(
+                                                    "#",
+                                                    c
+                                                )
+                                            )
+                                        } else {
+                                            for (i in 1..x10.quantity) {
+                                                c.add(CONST.BASE_URL + "${CONST.BASE_CONNECT}/${x10.position}/${x10.parts}/${coler}/${i}.png")
+                                            }
+                                            b.add(
+                                                ColorModel(
+                                                    coler,
+                                                    c
+                                                )
+                                            )
+                                        }
+                                    }
+                                    a.add(
+                                        BodyPartModel(
+                                            "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/${x10.parts}/nav.png",
+                                            b
+                                        )
+                                    )
+                                }
+                                var dataModel =
+                                    CustomModel(
+                                        "${CONST.BASE_URL}${CONST.BASE_CONNECT}$key/avatar.png",
+                                        a,
+                                        true
+                                    )
+                                dataModel.bodyPart.forEach { mbodyPath ->
+                                    if (mbodyPath.icon.substringBeforeLast("/")
+                                            .substringAfterLast("/").substringAfter("-") == "1"
+                                    ) {
+                                        mbodyPath.listPath.forEach {
+                                            if (it.listPath[0] != "dice") {
+                                                it.listPath.add(0, "dice")
+                                            }
+                                        }
+                                    } else {
+                                        mbodyPath.listPath.forEach {
+                                            if (it.listPath[0] != "none") {
+                                                it.listPath.add(0, "none")
+                                                it.listPath.add(1, "dice")
+                                            }
+                                        }
+                                    }
+                                }
+                                DataHelper.arrBlackCentered.add(0, dataModel)
+                            }
+                        }
+                        checkCallingDataOnline = false
+                    }
+
+                    LoadingStatus.Error -> {
+                        checkCallingDataOnline = false
+                    }
+
+                    else -> {
+                        checkCallingDataOnline = true
+                    }
+                }
+            }
+        }
     }
 
     override fun onRestart() {
