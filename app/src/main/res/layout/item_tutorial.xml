@@ -7,7 +7,7 @@
 
         <variable
             name="mTutorialModel"
-            type="com.oc.maker.create.avatar2.data.model.TutorialModel" />
+            type="com.ocmaker.fullbody.creator.data.model.TutorialModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.oc.maker.create.avatar2.utils.StrokeAppCompatTextView
+        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
             android:id="@+id/tv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

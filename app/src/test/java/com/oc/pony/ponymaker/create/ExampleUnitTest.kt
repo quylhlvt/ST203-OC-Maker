@@ -1,4 +1,4 @@
-package com.oc.maker.create.avatar2
+package com.ocmaker.fullbody.creator
 
 import org.junit.Assert
 import org.junit.Test

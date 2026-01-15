@@ -42,8 +42,8 @@
             </FrameLayout>
 
             <TextView
-                android:visibility="gone"
                 android:elevation="1dp"
+                android:visibility="gone"
                 android:id="@+id/txtContent1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:text="@string/haven_t_saved_it_yet_do_you_want_to_exit"
                 android:textColor="@color/app_color"
                 android:textSize="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnOk"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleFame"/>
@@ -68,28 +68,21 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/bg"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/titleFame">
 
                 <TextView
                     android:id="@+id/txtContent"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="-30dp"
                     android:fontFamily="@font/nunito_regular"
                     android:gravity="center"
                     android:text="@string/haven_t_saved_it_yet_do_you_want_to_exit"
                     android:textColor="@color/app_color"
                     android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/btnNo"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/titleFame" />
 
 
                 <TextView
@@ -97,7 +90,7 @@
                     android:id="@+id/btnOk"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
-                    android:background="@drawable/bg_btn_rate"
+                    android:background="@drawable/bg_btn_loading_yes"
                     android:fontFamily="@font/roboto_medium"
                     android:gravity="center"
                     android:text="@string/ok"
@@ -106,17 +99,15 @@
                     app:layout_constraintDimensionRatio="1.0:0.36"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtContent" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtContent1" />
                 <TextView
                     android:id="@+id/btnNo"
                     android:layout_width="0dp"
                     android:layout_height="36dp"
-                    android:layout_marginTop="15dp"
                     android:background="@drawable/bg_8_color"
                     android:fontFamily="@font/nunito_regular"
                     android:gravity="center"
                     android:layout_marginStart="20dp"
-                    android:layout_marginBottom="20dp"
                     android:text="@string/no"
                     android:textColor="@color/app_color"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -139,7 +130,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/btnNo"
                     app:layout_constraintTop_toTopOf="@+id/btnNo" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

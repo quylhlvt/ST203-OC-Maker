@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/img_bg_splash">
 
-        <com.oc.maker.create.avatar2.utils.StrokeAppCompatTextView
+        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
             android:layout_width="match_parent"
             android:id="@+id/titlePermission"
             android:gravity="center"

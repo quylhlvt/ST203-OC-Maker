@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.61" />
+            app:layout_constraintGuide_percent="0.60" />
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -29,7 +29,6 @@
             android:src="@drawable/ic_back_app"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnSave"
             android:layout_width="32dp"
@@ -69,7 +68,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.oc.maker.create.avatar2.custom.DrawView
+        <com.ocmaker.fullbody.creator.custom.DrawView
             android:id="@+id/drawView"
             android:layout_marginTop="10dp"
             android:layout_width="0dp"
@@ -86,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
-        </com.oc.maker.create.avatar2.custom.DrawView>
+        </com.ocmaker.fullbody.creator.custom.DrawView>
         <ImageView
             android:id="@+id/navBottom"
             android:layout_width="match_parent"
@@ -135,8 +134,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ctl"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
-            app:layout_constraintBottom_toTopOf="@id/llBottom">
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/llBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_vertical">
 
             <LinearLayout
                 android:id="@+id/llBG"
@@ -197,6 +199,7 @@
             android:id="@+id/llLoading"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:elevation="4dp"
             android:layout_marginBottom="82dp"
             android:background="#A0949494"
             android:gravity="center"
@@ -216,13 +219,21 @@
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="22dp">
 
-
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:src="@drawable/bg_dialog"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                     <FrameLayout
                         android:id="@+id/titleFame"
                         android:layout_width="0dp"
                         android:layout_height="41dp"
                         android:background="@drawable/bg_title_dialog"
-
                         app:layout_constraintEnd_toEndOf="parent"
                         android:elevation="1dp"
                         app:layout_constraintStart_toStartOf="parent"
@@ -234,7 +245,7 @@
                             android:gravity="center"
                             android:layout_marginHorizontal="0dp"
                             android:textSize="18sp"
-                            android:textColor="@color/white"
+                            android:textColor="@color/app_color"
                             android:fontFamily="@font/nunito_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -242,49 +253,40 @@
                             android:text="@string/loading"/>
 
                     </FrameLayout>
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/bg"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:background="@drawable/bg_dialog"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                    <TextView
+                        android:id="@+id/txtContent"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:fontFamily="@font/nunito_regular"
+                        android:gravity="center"
+                        android:text="@string/wait_a_few_second"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toTopOf="@+id/btnNo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/titleFame" />
 
-                        <TextView
-                            android:id="@+id/txtContent"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="20dp"
-                            android:layout_marginTop="-30dp"
-                            android:fontFamily="@font/nunito_regular"
-                            android:gravity="center"
-                            android:text="@string/wait_a_few_second"
-                            android:textColor="@color/white"
-                            android:textSize="16dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-                        <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/animationView"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:layout_marginTop="-20dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/txtContent"
-                            app:lottie_autoPlay="true"
-                            app:lottie_loop="true"
-                            app:lottie_rawRes="@raw/json_loading" />
+<!--                       -->
+<!--                        <com.airbnb.lottie.LottieAnimationView-->
+<!--                            android:id="@+id/animationView"-->
+<!--                            android:layout_width="100dp"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:layout_marginTop="-20dp"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toBottomOf="@+id/txtContent"-->
+<!--                            app:lottie_autoPlay="true"-->
+<!--                            app:lottie_loop="true"-->
+<!--                            app:lottie_rawRes="@raw/json_loading" />-->
 
                         <TextView
                             android:visibility="gone"
                             android:id="@+id/btnNo"
-                            android:layout_marginTop="15dp"
                             android:layout_width="0dp"
                             android:layout_height="36dp"
                             android:layout_marginStart="20dp"
-                            android:layout_marginBottom="20dp"
                             android:background="@drawable/bg_8_color"
                             android:gravity="center"
                             android:text="@string/no"
@@ -314,7 +316,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
         </LinearLayout>
 

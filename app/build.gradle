@@ -10,17 +10,17 @@ plugins {
 }
 
 android {
-    namespace 'com.oc.maker.create.avatar2'
+    namespace 'com.ocmaker.fullbody.creator'
     compileSdk 36
 
     defaultConfig {
-        applicationId "com.oc.maker.create.avatar2"
+        applicationId "com.ocmaker.fullbody.creator"
         minSdk 24
         targetSdk 36
         versionCode 1
         versionName "1.0.0"
         def formattedDate = new Date().format('MM.dd.yyyy')
-        archivesBaseName = "OC_Maker_Avatar_Maker_V2_${versionName}_${formattedDate}"
+        archivesBaseName = "OC_Maker_Full_Body_Character_${versionName}_${formattedDate}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -114,8 +114,5 @@ dependencies {
     implementation ("com.google.firebase:firebase-crashlytics")
     implementation ("com.google.firebase:firebase-messaging:25.0.1")
     implementation ("com.google.firebase:firebase-config:23.0.1")
-
-
-
 
 }

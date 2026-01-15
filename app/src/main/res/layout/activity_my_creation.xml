@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.oc.maker.create.avatar2.utils.StrokeAppCompatTextView
+        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

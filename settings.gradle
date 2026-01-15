@@ -39,5 +39,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "OC Maker Avatar Maker V2"
+rootProject.name = "OC Maker Full Body Character"
 include ':app'
