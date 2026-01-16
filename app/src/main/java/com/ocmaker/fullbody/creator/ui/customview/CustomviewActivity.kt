@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.toColorInt
 import com.bumptech.glide.Glide
 import com.bumptech.glide.Priority
@@ -51,10 +52,27 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
     }
     // Thêm map để cache index của icon (từ DataHelper.listImageSortView)
     private val iconToIndexMap = mutableMapOf<String, Int>()
+    private fun applyGradientToLoadingText() {
+        binding.txtContent.post {
+            binding.txtContent.gradientHorizontal(
+                "#01579B".toColorInt(),
+                "#2686C6".toColorInt()
+            )
+        }
+        binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
+
+    }
+
+    // Call this when you show loading
+
     override fun initView() {
-        binding.txtContent.gradientHorizontal(
-            "#01579B".toColorInt(),
-            "#2686C6".toColorInt())
+        binding.txtContent.post {
+            binding.txtContent.gradientHorizontal(
+                startColor = "#01579B".toColorInt(),
+                endColor   = "#2686C6".toColorInt()
+            )
+        }
+        binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
         binding.btnSave.isSelected = true
         if (arrBlackCentered.size > 0) {
             binding.apply {
@@ -498,6 +516,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     return@onSingleClick
                 }
                 llLoading.visibility = View.VISIBLE
+                applyGradientToLoadingText()
 //                animationView.visibility = View.VISIBLE
                 val a = arrBlackCentered[blackCentered].avt.split("/")
                 var b = a[a.size - 2]

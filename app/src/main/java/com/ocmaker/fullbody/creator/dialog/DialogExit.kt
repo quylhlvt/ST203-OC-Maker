@@ -1,6 +1,7 @@
 package com.ocmaker.fullbody.creator.dialog
 
 import android.app.Activity
+import androidx.core.content.ContextCompat
 import com.ocmaker.fullbody.creator.R
 import com.ocmaker.fullbody.creator.databinding.DialogExitBinding
 import com.ocmaker.fullbody.creator.utils.hide
@@ -19,10 +20,13 @@ class DialogExit(context: Activity, var type: String) :
         binding.txtContent.gradientHorizontal(
             "#01579B".toColorInt(),
             "#2686C6".toColorInt())
+        binding.txtTitle.setTextColor(ContextCompat.getColor(context,R.color.white))
+
         when(type){
             "exit" ->{
                 binding.txtTitle.text = context.getString(R.string.exit)
                 binding.txtTitle.isSelected = true
+                binding.txtContent.post {  }
                 binding.txtContent.text = context.getString(R.string.haven_t_saved_it_yet_do_you_want_to_exit)
 //                binding.nativeAds.show()
 //                Admob.getInstance().loadNativeAd(
