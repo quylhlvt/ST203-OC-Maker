@@ -12,7 +12,6 @@ plugins {
 android {
     namespace 'com.ocmaker.fullbody.creator'
     compileSdk 36
-
     defaultConfig {
         applicationId "com.ocmaker.fullbody.creator"
         minSdk 24
@@ -23,7 +22,6 @@ android {
         archivesBaseName = "OC_Maker_Full_Body_Character_${versionName}_${formattedDate}"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             minifyEnabled false

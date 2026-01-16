@@ -35,10 +35,10 @@ class PermissionActivity : AbsBaseActivity<ActivityPermissionBinding>() {
     override fun getLayoutId(): Int = R.layout.activity_permission
 
     override fun initView() {
-        binding.btnContinue.gradientVertical(
-            "#01579B".toColorInt(),
-            "#01579B".toColorInt()
-        )
+//        binding.btnContinue.gradientVertical(
+//            "#01579B".toColorInt(),
+//            "#01579B".toColorInt()
+//        )
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             binding.rl4.visibility = View.VISIBLE
             binding.rl2.visibility = View.GONE
@@ -49,20 +49,20 @@ class PermissionActivity : AbsBaseActivity<ActivityPermissionBinding>() {
 
         val space = " "
         binding.tvTitle.text = TextUtils.concat(
-            changeText(this, getString(R.string.allow), R.color.app_color2, R.font.nunito_medium),
+            changeText(this, getString(R.string.allow), R.color.app_color, R.font.crimson_text_semi_bold),
             space,
             changeText(
                 this,
                 getString(R.string.app_name),
-                R.color.app_color2,
-                R.font.nunito_medium
+                R.color.app_color,
+                R.font.crimson_text_semi_bold
             ),
             space,
             changeText(
                 this,
                 getString(R.string.request_permission_to_use_notifications_to_notify_you),
-                R.color.app_color2,
-                R.font.nunito_medium
+                R.color.app_color,
+                R.font.crimson_text_semi_bold
             )
         )
 

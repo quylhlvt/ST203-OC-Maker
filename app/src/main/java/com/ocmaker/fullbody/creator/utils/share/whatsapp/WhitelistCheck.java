@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class WhitelistCheck {
-    public static final String CONTENT_PROVIDER_AUTHORITY = "com.ocmaker.fullbody.creator.StickerContentProvider";
+    public static final String CONTENT_PROVIDER_AUTHORITY = "com.ocmaker.fullbody.creator.utils.share.whatsapp.StickerContentProvider";
     private static final String AUTHORITY_QUERY_PARAM = "authority";
     private static final String IDENTIFIER_QUERY_PARAM = "identifier";
     private static String STICKER_APP_AUTHORITY = CONTENT_PROVIDER_AUTHORITY;

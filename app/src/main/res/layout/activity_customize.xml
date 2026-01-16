@@ -40,17 +40,7 @@
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack" />
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btnRevert"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@drawable/ic_flip"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="1dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnSave"
-            app:layout_constraintHorizontal_chainStyle="spread" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -68,11 +58,22 @@
                 android:layout_height="32dp"
                 android:elevation="1dp"
                 android:src="@drawable/ic_reset"
+                app:layout_constraintEnd_toStartOf="@+id/btnRevert"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent" />
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btnRevert"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:elevation="1dp"
+                android:src="@drawable/ic_flip"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/btnReset"
+                app:layout_constraintTop_toTopOf="parent" />
 <!--            <androidx.appcompat.widget.AppCompatImageView-->
 <!--                android:id="@+id/btnSee"-->
 <!--                android:layout_width="32dp"-->
@@ -84,16 +85,19 @@
 <!--                app:layout_constraintTop_toTopOf="parent"-->
 <!--                app:layout_constraintBottom_toBottomOf="parent" />-->
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <RelativeLayout
             android:id="@+id/rl"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="34dp"
-            android:visibility="visible"
+           android:layout_marginVertical="8dp"
             android:elevation="0dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toBottomOf="@+id/btnRevert">
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/llNav"
+            app:layout_constraintDimensionRatio="3:4.68"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSave">
 
             <!--            <androidx.appcompat.widget.AppCompatImageView-->
             <!--                android:id="@+id/body"-->
@@ -106,82 +110,96 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btnDice"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:elevation="1dp"
+            android:layout_width="39dp"
+            android:layout_height="39dp"
+            android:elevation="2dp"
+            android:layout_marginBottom="28dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/imv_random"
-            app:layout_constraintBottom_toBottomOf="@id/llColor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/llColor" />
+            app:layout_constraintBottom_toTopOf="@+id/llNav"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imvShowColor"
-            android:layout_width="40dp"
+            android:layout_width="38dp"
             android:layout_height="40dp"
-            android:elevation="1dp"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="2dp"
+            android:layout_marginBottom="17dp"
+            android:elevation="2dp"
             android:src="@drawable/imv_color"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rl" />
-
-        <LinearLayout
-            android:elevation="1dp"
-            android:id="@+id/llColor"
+            app:layout_constraintBottom_toTopOf="@+id/llNav"
+            app:layout_constraintStart_toStartOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:visibility="invisible"
+            android:id="@+id/imvNoColor"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="40dp"
-            android:gravity="start"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@id/imvShowColor"
-            app:layout_constraintEnd_toStartOf="@id/btnDice"
-            app:layout_constraintStart_toEndOf="@id/imvShowColor"
-            app:layout_constraintTop_toTopOf="@id/imvShowColor">
+            android:layout_height="0dp"
+            android:elevation="2dp"
+            app:layout_constraintDimensionRatio="1:1"
+            android:src="@drawable/imv_nocolor"
+            app:layout_constraintBottom_toBottomOf="@+id/frameRecycle"
+            app:layout_constraintEnd_toEndOf="@+id/frameRecycle"
+            app:layout_constraintStart_toStartOf="@+id/frameRecycle" />
+        <FrameLayout
+            android:id="@+id/frameRecycle"
+            android:elevation="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginVertical="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imvShowColor"
+            app:layout_constraintEnd_toEndOf="@+id/imvShowColor"
+            app:layout_constraintBottom_toTopOf="@id/imvShowColor"
+            app:layout_constraintTop_toBottomOf="@+id/imvBack">
 
-            <FrameLayout
+            <LinearLayout
+                android:layout_gravity="bottom"
+                android:id="@+id/llColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:gravity="center"
                 android:background="@drawable/bg_8_color"
                 android:orientation="vertical"
-                app:cardCornerRadius="14dp"
-                app:strokeColor="#4C5AF2"
-                app:strokeWidth="0.5dp">
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginVertical="8dp">
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rcvColor"
+                >
+                    <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="center"
-                        android:layout_marginHorizontal="8dp"
-                        android:clipToPadding="false"
-                        android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:itemCount="10"
-                        tools:listitem="@layout/item_color" />
-                </RelativeLayout>
+                        android:layout_height="match_parent"
+                        android:layout_marginVertical="8dp">
 
-            </FrameLayout>
-        </LinearLayout>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcvColor"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="13dp"
+                            android:clipToPadding="false"
+                            android:orientation="vertical"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            tools:itemCount="10"
+                            tools:listitem="@layout/item_color" />
+                    </RelativeLayout>
+            </LinearLayout>
+        </FrameLayout>
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.78" />
 
         <LinearLayout
+
             android:id="@+id/llPart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/img_frame_bg_layer_custom"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@id/llNav"
-            app:layout_constraintTop_toBottomOf="@id/btnDice">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvPart"
@@ -205,7 +223,7 @@
             android:layout_height="56dp"
             android:background="@drawable/bg_nav_custom"
             android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toTopOf="@+id/llPart">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvNav"
@@ -273,7 +291,6 @@
                             android:fontFamily="@font/nunito_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:paddingBottom="5dp"
                             android:text="@string/loading"/>
 
                     </FrameLayout>
@@ -285,7 +302,6 @@
                         android:fontFamily="@font/nunito_regular"
                         android:gravity="center"
                         android:text="@string/wait_a_few_second"
-                        android:textColor="@color/app_color"
                         android:textSize="16dp"
                         app:layout_constraintBottom_toTopOf="@+id/btnNo"
                         app:layout_constraintEnd_toEndOf="parent"

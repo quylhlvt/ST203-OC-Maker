@@ -69,11 +69,25 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
     var path = ""
     val viewModel: BackGroundViewModel by viewModels()
     override fun getLayoutId(): Int = R.layout.activity_background
+    private fun applyGradientToLoadingText() {
+        binding.txtContent.post {
+            binding.txtContent.gradientHorizontal(
+                "#01579B".toColorInt(),
+                "#2686C6".toColorInt()
+            )
+        }
+        binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
 
+    }
     override fun initView() {
-        binding.txtContent.gradientHorizontal(
-            "#01579B".toColorInt(),
-            "#2686C6".toColorInt())
+        binding.txtContent.post {
+            binding.txtContent.gradientHorizontal(
+                startColor = "#01579B".toColorInt(),
+                endColor   = "#2686C6".toColorInt()
+            )
+
+        }
+        binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
         binding.txtTitle.isSelected = true
         if (DataHelper.arrBlackCentered.isEmpty()) {
 //            GlobalScope.launch(Dispatchers.IO) {
@@ -174,9 +188,9 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
 
     private fun showLoading() {
         binding.llLoading.show()
+        applyGradientToLoadingText()
 //        binding.animationView.show()
     }
-
     private fun clearFocus() {
         binding.drawView.hideSelect()
     }
@@ -344,6 +358,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             btnSave.onSingleClick {
                 hideKeyboard()
                 binding.llLoading.show()
+                applyGradientToLoadingText()
 //                binding.animationView.show()
                 clearFocus()
                 lifecycleScope.launch(Dispatchers.IO) {

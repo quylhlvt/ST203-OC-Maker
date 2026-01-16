@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
+        <TextView
             android:id="@+id/titleSetting"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -38,9 +38,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack"
-            android:fontFamily="@font/cherry_bomb_one_regular"
-            android:textColor="@color/white"
-            android:textSize="28sp"
+            android:fontFamily="@font/crimsontext_regular"
+            android:textColor="@color/app_color2"
+            android:textSize="24sp"
             app:strokeColor="@color/app_color"
             app:strokeJoinStyle="miter"
             app:strokeMiter="5dp"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/crimsontext_regular"
                 android:text="@string/language"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -102,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/crimsontext_regular"
                 android:text="@string/rate_us"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -135,7 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/crimsontext_regular"
                 android:text="@string/share_app"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
@@ -168,7 +168,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="16dp"
-                android:fontFamily="@font/josefinsans_regular"
+                android:fontFamily="@font/crimsontext_regular"
                 android:text="@string/privacy_amp_policy"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
