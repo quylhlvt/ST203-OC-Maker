@@ -23,14 +23,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
+        <TextView
             android:id="@+id/tvTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/cherry_bomb_one_regular"
+            android:fontFamily="@font/crimsontext_regular"
             android:text="@string/my_work"
             android:maxWidth="200dp"
-            android:textColor="@color/white"
+            android:textColor="@color/app_color2"
             android:textSize="26sp"
             app:strokeWidth="2dp"
             app:strokeColor="@color/app_color"
@@ -51,7 +51,6 @@
             android:id="@+id/imvTickAll"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:padding="2dp"
             android:visibility="gone"
             android:layout_marginEnd="14dp"
             android:src="@drawable/imv_tick_all_false"
@@ -91,7 +90,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_my_work"
-                android:fontFamily="@font/nunito_bold"
+                android:fontFamily="@font/crimson_text_bold"
                 android:gravity="center"
                 android:text="@string/avatar"
 
@@ -112,7 +111,7 @@
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_btn_my_work_unselect"
-                android:fontFamily="@font/nunito_bold"
+                android:fontFamily="@font/crimson_text_bold"
                 android:gravity="center"
                 android:text="@string/design"
                 android:textColor="@color/app_color"
@@ -245,7 +244,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_telegram"
+                android:background="@drawable/btn_whatsapp"
                 android:gravity="center">
 
                 <ImageView

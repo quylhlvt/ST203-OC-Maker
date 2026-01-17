@@ -68,9 +68,17 @@ object DataHelper {
             R.drawable.ic_flag_indo
         )
     )
+    fun View.updateMargin( context: Context, leftDp: Int? = null, topDp: Int? = null, rightDp: Int? = null, bottomDp: Int? = null ) {
+        val params = this.layoutParams as? ViewGroup.MarginLayoutParams ?: return
+        leftDp?.let { params.leftMargin = it.dp(context) }
+        topDp?.let { params.topMargin = it.dp(context) }
+        rightDp?.let { params.rightMargin = it.dp(context) }
+        bottomDp?.let { params.bottomMargin = it.dp(context) }
+        this.layoutParams = params }
     fun View.dpToPx(dp: Int): Float {
         return dp * resources.displayMetrics.density
     }
+    fun Context.dp(value: Float): Float = value * resources.displayMetrics.density
     fun Int.dp(context: Context): Int =
         (this * context.resources.displayMetrics.density).roundToInt()
     fun View.setMargins(

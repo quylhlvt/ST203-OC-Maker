@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -14,6 +16,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ocmaker.fullbody.creator.R
@@ -49,6 +53,8 @@ import com.ocmaker.fullbody.creator.custom.DrawView
 import com.ocmaker.fullbody.creator.custom.DrawableDraw
 import com.ocmaker.fullbody.creator.custom.listener.listenerdraw.OnDrawListener
 import com.ocmaker.fullbody.creator.data.repository.ApiRepository
+import com.ocmaker.fullbody.creator.utils.DataHelper.dp
+import com.ocmaker.fullbody.creator.utils.DataHelper.updateMargin
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -70,23 +76,24 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
     val viewModel: BackGroundViewModel by viewModels()
     override fun getLayoutId(): Int = R.layout.activity_background
     private fun applyGradientToLoadingText() {
-        binding.txtContent.post {
-            binding.txtContent.gradientHorizontal(
-                "#01579B".toColorInt(),
-                "#2686C6".toColorInt()
-            )
-        }
+//        binding.txtContent.post {
+//            binding.txtContent.gradientHorizontal(
+//                "#01579B".toColorInt(),
+//                "#2686C6".toColorInt()
+//            )
+//        }
         binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
 
     }
     override fun initView() {
-        binding.txtContent.post {
-            binding.txtContent.gradientHorizontal(
-                startColor = "#01579B".toColorInt(),
-                endColor   = "#2686C6".toColorInt()
-            )
-
-        }
+        binding.btnBg.updateMargin(this@BackgroundActivity, bottomDp = 16)
+//        binding.txtContent.post {
+//            binding.txtContent.gradientHorizontal(
+//                startColor = "#01579B".toColorInt(),
+//                endColor   = "#2686C6".toColorInt()
+//            )
+//
+//        }
         binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
         binding.txtTitle.isSelected = true
         if (DataHelper.arrBlackCentered.isEmpty()) {
@@ -114,7 +121,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
                     binding.llBottom,
                     0f,
                     0f,
-                    dpToPx(200f, applicationContext),
+                    dpToPx(300f, applicationContext),
                     0f
                 )
             } else {
@@ -137,11 +144,25 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
 
     fun initRcv() {
         binding.apply {
-            iclBg.rcvColor.itemAnimator = null
-            iclBg.rcvColor.adapter = adapterColor
-
-            iclBg.rcvImage.itemAnimator = null
-            iclBg.rcvImage.adapter = adapterImage
+            iclBg.rcvColor.apply {
+                layoutManager = GridLayoutManager(
+                    this@BackgroundActivity,
+                    2,                          // spanCount = 2 → 2 hàng dọc
+                    GridLayoutManager.HORIZONTAL, // cuộn ngang
+                    false
+                )
+                itemAnimator = null
+                adapter = adapterColor
+            }
+            iclBg.rcvImage.apply {
+                layoutManager = LinearLayoutManager(
+                    this@BackgroundActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                itemAnimator = null
+                adapter = adapterImage
+            }
 
             iclText.rcvColor.itemAnimator = null
             iclText.rcvColor.adapter = adapterColorText
@@ -188,7 +209,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
 
     private fun showLoading() {
         binding.llLoading.show()
-        applyGradientToLoadingText()
+//        applyGradientToLoadingText()
 //        binding.animationView.show()
     }
     private fun clearFocus() {
@@ -238,10 +259,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
 
             btnBg.onSingleClick {
                 hideKeyboard()
-                btnBg.setImageResource(R.drawable.imv_bg_true)
-                btnItem.setImageResource(R.drawable.imv_item)
-                btnBgText.setImageResource(R.drawable.imv_bg_text)
-                btnText.setImageResource(R.drawable.imv_text)
+                selectBottomTab(btnBg)
                 llBG.show()
                 llStiker.hide()
                 llText.hide()
@@ -249,10 +267,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             }
             btnItem.onSingleClick {
                 hideKeyboard()
-                btnBg.setImageResource(R.drawable.imv_bg)
-                btnItem.setImageResource(R.drawable.imv_item_true)
-                btnBgText.setImageResource(R.drawable.imv_bg_text)
-                btnText.setImageResource(R.drawable.imv_text)
+                selectBottomTab(btnItem)
                 llBG.hide()
                 llStiker.show()
                 llText.hide()
@@ -260,10 +275,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             }
             btnBgText.onSingleClick {
                 hideKeyboard()
-                btnBg.setImageResource(R.drawable.imv_bg)
-                btnItem.setImageResource(R.drawable.imv_item)
-                btnBgText.setImageResource(R.drawable.imv_bg_text_true)
-                btnText.setImageResource(R.drawable.imv_text)
+                selectBottomTab(btnBgText)
                 llBG.hide()
                 llStiker.hide()
                 llTextBG.show()
@@ -271,10 +283,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             }
             btnText.onSingleClick {
                 hideKeyboard()
-                btnBg.setImageResource(R.drawable.imv_bg)
-                btnItem.setImageResource(R.drawable.imv_item)
-                btnBgText.setImageResource(R.drawable.imv_bg_text)
-                btnText.setImageResource(R.drawable.imv_text_true)
+                selectBottomTab(btnText)
                 llBG.hide()
                 llStiker.hide()
                 llTextBG.hide()
@@ -358,7 +367,7 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             btnSave.onSingleClick {
                 hideKeyboard()
                 binding.llLoading.show()
-                applyGradientToLoadingText()
+//                applyGradientToLoadingText()
 //                binding.animationView.show()
                 clearFocus()
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -475,7 +484,30 @@ class BackgroundActivity : AbsBaseActivity<ActivityBackgroundBinding>() {
             binding.tvGetText.text = it.toString().trim()
         }
     }
+    private fun selectBottomTab(selectedBtn: ImageView) {
+        // Danh sách tất cả 4 nút tab
+        val tabs = listOf(
+            binding.btnBg to Pair(R.drawable.imv_bg, R.drawable.imv_bg_true),
+            binding.btnItem to Pair(R.drawable.imv_item, R.drawable.imv_item_true),
+            binding.btnBgText to Pair(R.drawable.imv_bg_text, R.drawable.imv_bg_text_true),
+            binding.btnText to Pair(R.drawable.imv_text, R.drawable.imv_text_true)
+        )
 
+        tabs.forEach { (btn, icons) ->
+            val (normalIcon, selectedIcon) = icons
+            if (btn == selectedBtn) {
+                // Nút được chọn
+                btn.isSelected = true
+                btn.setImageResource(selectedIcon)
+                btn.updateMargin(this@BackgroundActivity, bottomDp = 16)
+            } else {
+                // Các nút khác → reset
+                btn.isSelected = false
+                btn.setImageResource(normalIcon)
+                btn.updateMargin(this@BackgroundActivity, bottomDp = 0)
+            }
+        }
+    }
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->

@@ -17,16 +17,15 @@ class DialogExit(context: Activity, var type: String) :
     override fun getContentView(): Int = R.layout.dialog_exit
 
     override fun initView() {
-        binding.txtContent.gradientHorizontal(
-            "#01579B".toColorInt(),
-            "#2686C6".toColorInt())
+//        binding.txtContent.gradientHorizontal(
+//            "#01579B".toColorInt(),
+//            "#2686C6".toColorInt())
         binding.txtTitle.setTextColor(ContextCompat.getColor(context,R.color.white))
 
         when(type){
             "exit" ->{
                 binding.txtTitle.text = context.getString(R.string.exit)
                 binding.txtTitle.isSelected = true
-                binding.txtContent.post {  }
                 binding.txtContent.text = context.getString(R.string.haven_t_saved_it_yet_do_you_want_to_exit)
 //                binding.nativeAds.show()
 //                Admob.getInstance().loadNativeAd(

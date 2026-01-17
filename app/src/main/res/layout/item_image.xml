@@ -8,9 +8,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
 
 
         <FrameLayout
@@ -73,9 +72,9 @@
                         android:layout_marginTop="2dp"
                         android:gravity="center"
                         android:text="@string/add_image"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/crimson_text_bold"
                         android:textColor="@color/app_color"
-                        android:textSize="10sp"
+                        android:textSize="8sp"
                         tools:ignore="SmallSp"
                         />
                 </LinearLayout>

@@ -9,12 +9,15 @@ import com.ocmaker.fullbody.creator.data.model.ColorModel
 import com.ocmaker.fullbody.creator.databinding.ItemColorBinding
 import com.ocmaker.fullbody.creator.utils.onClickCustom
 import com.ocmaker.fullbody.creator.base.AbsBaseDiffCallBack
+import android.util.Log
 
 class ColorAdapter : AbsBaseAdapter<ColorModel, ItemColorBinding>(R.layout.item_color, DiffColor()) {
     var onClick: ((Int) -> Unit)? = null
     var posColor = 0
+
     fun setPos(pos: Int) {
         posColor = pos
+        notifyDataSetChanged() // Nếu cần update UI ngay
     }
 
     class DiffColor : AbsBaseDiffCallBack<ColorModel>() {
@@ -23,9 +26,8 @@ class ColorAdapter : AbsBaseAdapter<ColorModel, ItemColorBinding>(R.layout.item_
         }
 
         override fun contentsTheSame(oldItem: ColorModel, newItem: ColorModel): Boolean {
-            return oldItem.color != newItem.color
+            return oldItem == newItem  // So sánh toàn bộ object tốt hơn
         }
-
     }
 
     override fun bind(
@@ -34,17 +36,26 @@ class ColorAdapter : AbsBaseAdapter<ColorModel, ItemColorBinding>(R.layout.item_
         data: ColorModel,
         holder: RecyclerView.ViewHolder
     ) {
-//        if(position == arr.size-1){
-//            setLayoutParam(binding.ctl,0f,0f,0f,0f)
-//        }else{
-//            setLayoutParam(binding.ctl,0f, dpToPx(100f,binding.root.context),0f,0f)
-//        }
         if (posColor == position) {
             binding.imv.visibility = View.VISIBLE
         } else {
             binding.imv.visibility = View.GONE
         }
-        binding.bg.setColorFilter("#${data.color}".toColorInt())
+
+        val colorInt = try {
+            val hex = "#${data.color.trim()}"
+            if (hex.length == 7 || hex.length == 9) {
+                hex.toColorInt()
+            } else {
+                android.graphics.Color.GRAY
+            }
+        } catch (e: Exception) {
+            Log.w("ColorAdapter", "Invalid color: #${data.color}", e)
+            android.graphics.Color.GRAY  // hoặc Color.TRANSPARENT nếu muốn trong suốt
+        }
+
+        binding.bg.setColorFilter(colorInt)
+
         binding.bg.onClickCustom {
             onClick?.invoke(position)
         }

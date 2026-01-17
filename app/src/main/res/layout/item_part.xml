@@ -44,7 +44,7 @@
                         android:layout_height="match_parent"
                         app:cardCornerRadius="10dp"
                         app:strokeWidth="2dp"
-                        app:strokeColor="@color/_9DD4FF"
+                        app:strokeColor="@color/D89446"
                         app:cardBackgroundColor="#D6FFFFFF"
                         android:outlineAmbientShadowColor="#E8C0F5"
 

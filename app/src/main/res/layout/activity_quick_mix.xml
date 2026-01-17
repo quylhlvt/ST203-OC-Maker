@@ -23,12 +23,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
+        <TextView
             android:id="@+id/titleQuick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/cherry_bomb_one_regular
-"
+            android:fontFamily="@font/crimsontext_regular"
             android:gravity="center"
             android:text="@string/trending_custom"
             android:singleLine="true"
@@ -39,14 +38,10 @@
             android:marqueeRepeatLimit="marquee_forever"
             app:layout_constraintBottom_toBottomOf="@id/imvBack"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/imvBack"
-            app:layout_constraintVertical_bias="0.0"
-            android:textColor="@color/white"
+            android:textColor="@color/app_color2"
             android:textSize="26sp"
-            app:strokeWidth="2dp"
-            app:strokeColor="@color/app_color"
             />
 
         <androidx.recyclerview.widget.RecyclerView

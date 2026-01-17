@@ -22,7 +22,7 @@ import com.ocmaker.fullbody.creator.utils.DataHelper
 import com.ocmaker.fullbody.creator.utils.DataHelper.arrBlackCentered
 import com.ocmaker.fullbody.creator.utils.SystemUtils.gradientHorizontal
 import com.ocmaker.fullbody.creator.utils.fromList
-import com.ocmaker.fullbody.creator.utils.inhide
+import com.ocmaker.fullbody.creator.utils.hide
 import com.ocmaker.fullbody.creator.utils.isInternetAvailable
 import com.ocmaker.fullbody.creator.utils.onSingleClick
 import com.ocmaker.fullbody.creator.utils.saveBitmap
@@ -39,7 +39,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
         ColorAdapter()
     }
     val adapterNav by lazy {
-        NavAdapter()
+        NavAdapter(this@CustomviewActivity)
     }
     val adapterPart by lazy {
         PartAdapter()
@@ -56,6 +56,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
         binding.txtContent.post {
             binding.txtContent.gradientHorizontal(
                 "#01579B".toColorInt(),
+
                 "#2686C6".toColorInt()
             )
         }
@@ -66,12 +67,12 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
     // Call this when you show loading
 
     override fun initView() {
-        binding.txtContent.post {
-            binding.txtContent.gradientHorizontal(
-                startColor = "#01579B".toColorInt(),
-                endColor   = "#2686C6".toColorInt()
-            )
-        }
+//        binding.txtContent.post {
+//            binding.txtContent.gradientHorizontal(
+//                startColor = "#01579B".toColorInt(),
+//                endColor   = "#2686C6".toColorInt()
+//            )
+//        }
         binding.txtTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
         binding.btnSave.isSelected = true
         if (arrBlackCentered.size > 0) {
@@ -96,12 +97,13 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                 adapterNav.submitList(listData)
 
                 adapterColor.setPos(arrInt[0][1])
+                updateColorSectionVisibility(0)
                 if (listData[adapterNav.posNav].listPath.size == 1) {
                     binding.llColor.visibility = View.INVISIBLE
-                    binding.imvShowColor.visibility = View.INVISIBLE
+//                    binding.imvShowColor.visibility = View.INVISIBLE
                 } else {
                     binding.llColor.visibility = View.VISIBLE
-                    binding.imvShowColor.visibility = View.VISIBLE
+//                    binding.imvShowColor.visibility = View.VISIBLE
                     adapterColor.submitList(listData[adapterNav.posNav].listPath)
                 }
                 adapterPart.setPos(arrInt[0][0])
@@ -128,6 +130,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     binding.llColor.visibility = View.VISIBLE
                     adapterColor.submitList(listData[adapterNav.posNav].listPath)
                 }
+                updateColorSectionVisibility(adapterNav.posNav)
             }
         } else {
             finish()
@@ -245,46 +248,36 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             }
         }
         adapterNav.onClick = {
-            if (!arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(
-                    applicationContext
-                )
-            ) {
-                adapterNav.setPos(it)
+            if (!arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(applicationContext)) {
+                val newPos = it
+                adapterNav.setPos(newPos)
                 adapterNav.submitList(listData)
-                adapterColor.setPos(arrInt[it][1])
+                adapterColor.setPos(arrInt[newPos][1])
 
-                if (listData[adapterNav.posNav].listPath.size == 1) {
-                    binding.llColor.visibility = View.INVISIBLE
-                    binding.imvShowColor.visibility = View.INVISIBLE
-                } else {
-                    if (arrShowColor[adapterNav.posNav]) {
-                        binding.llColor.show()
-                    } else {
-                        binding.llColor.inhide()
-                    }
-                    binding.imvShowColor.visibility = View.VISIBLE
-                    adapterColor.submitList(listData[it].listPath)
-                    binding.root.postDelayed(
-                        { binding.rcvColor.smoothScrollToPosition(arrInt[it][1]) },
-                        100
-                    )
-                }
+                val currentBodyPart = listData[newPos]
+
+                // Gọi hàm đồng bộ → thay thế toàn bộ logic if-else visibility cũ
+                updateColorSectionVisibility(newPos)
+
+                adapterColor.submitList(currentBodyPart.listPath)
+                binding.root.postDelayed(
+                    { binding.rcvColor.smoothScrollToPosition(arrInt[newPos][1]) },
+                    100
+                )
+
                 if (adapterColor.posColor == arrInt[adapterNav.posNav][1]) {
                     adapterPart.setPos(arrInt[adapterNav.posNav][0])
                 } else {
                     adapterPart.setPos(-1)
                 }
-                adapterPart.submitList(listData[it].listPath[adapterColor.posColor].listPath)
+                adapterPart.submitList(currentBodyPart.listPath[adapterColor.posColor].listPath)
                 binding.root.postDelayed(
-                    { binding.rcvPart.smoothScrollToPosition(arrInt[it][0]) },
+                    { binding.rcvPart.smoothScrollToPosition(arrInt[newPos][0]) },
                     100
                 )
 
             } else {
-                showToast(
-                    applicationContext,
-                    R.string.please_check_your_network_connection
-                )
+                showToast(applicationContext, R.string.please_check_your_network_connection)
             }
         }
         adapterPart.onClick = { it, type ->
@@ -359,14 +352,9 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
         }
         binding.apply {
             imvShowColor.onSingleClick {
+                if (listData[adapterNav.posNav].listPath.size <= 1) return@onSingleClick
                 arrShowColor[adapterNav.posNav] = !arrShowColor[adapterNav.posNav]
-                if (arrShowColor[adapterNav.posNav]) {
-                    imvShowColor.setImageResource(R.drawable.imv_color)
-                    llColor.show()
-                } else {
-                    imvShowColor.setImageResource(R.drawable.imv_color_hide)
-                    llColor.inhide()
-                }
+                updateColorSectionVisibility()  // ← thêm dòng này
             }
             btnReset.onSingleClick {
                 if(!DataHelper.arrBlackCentered[blackCentered].checkDataOnline || isInternetAvailable(
@@ -391,16 +379,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     adapterPart.setPos(arrInt[adapterNav.posNav][0])
                     adapterColor.setPos(arrInt[adapterNav.posNav][1])
                     adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
-                    if (listData[adapterNav.posNav].listPath.size == 1) {
-                        binding.llColor.visibility = View.INVISIBLE
-                        binding.imvShowColor.visibility = View.INVISIBLE
-                    } else {
-                        if (!checkHide) {
-                            binding.llColor.visibility = View.VISIBLE
-                            binding.imvShowColor.visibility = View.VISIBLE
-                            adapterColor.submitList(listData[adapterNav.posNav].listPath)
-                        }
-                    }
+                    updateColorSectionVisibility()
                     listData.forEachIndexed { index, bodyPartModel ->
                         putImage(bodyPartModel.icon, 1, true)
                     }
@@ -479,22 +458,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     adapterPart.setPos(arrInt[adapterNav.posNav][0])
                     adapterColor.setPos(arrInt[adapterNav.posNav][1])
                     adapterPart.submitList(listData[adapterNav.posNav].listPath[adapterColor.posColor].listPath)
-                    if (listData[adapterNav.posNav].listPath.size == 1) {
-                        binding.llColor.visibility = View.INVISIBLE
-                        binding.imvShowColor.visibility = View.INVISIBLE
-                    } else {
-                        if (!checkHide) {
-//                                if (arrShowColor[adapterNav.posNav]) {
-//                                    binding.llColor.show()
-//                                } else {
-//                                    binding.llColor.inhide()
-//                                }
-                            arrShowColor[adapterNav.posNav] = true
-                            binding.llColor.visibility = View.VISIBLE
-                            binding.imvShowColor.visibility = View.VISIBLE
-                            adapterColor.submitList(listData[adapterNav.posNav].listPath)
-                        }
-                    }
+                    updateColorSectionVisibility()
                     binding.rcvPart.post {
                         binding.rcvPart.smoothScrollToPosition(adapterPart.posPath)
                     }
@@ -523,7 +487,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                     return@onSingleClick
                 }
                 llLoading.visibility = View.VISIBLE
-                applyGradientToLoadingText()
+//                applyGradientToLoadingText()
 //                animationView.visibility = View.VISIBLE
                 val a = arrBlackCentered[blackCentered].avt.split("/")
                 var b = a[a.size - 2]
@@ -602,6 +566,31 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
 //            }
         }
 
+    }
+    private fun updateColorSectionVisibility(posNav: Int = adapterNav.posNav) {
+        if (posNav < 0 || posNav >= listData.size) return
+
+        val currentBodyPart = listData[posNav]
+        val hasMultipleColors = currentBodyPart.listPath.size > 1
+
+        if (!hasMultipleColors) {
+            binding.llColor.visibility = View.INVISIBLE
+            binding.imvNoColor.show()
+            binding.imvShowColor.setImageResource(R.drawable.imv_color)
+            binding.imvShowColor.visibility = View.VISIBLE
+//            binding.imvShowColor.visibility = View.INVISIBLE
+            return
+        }
+        binding.imvNoColor.hide()
+        // Có nhiều màu → quyết định hiển thị dựa trên arrShowColor
+        if (arrShowColor[posNav]) {
+            binding.imvShowColor.setImageResource(R.drawable.imv_color)
+            binding.llColor.visibility = View.VISIBLE
+        } else {
+            binding.imvShowColor.setImageResource(R.drawable.imv_color_hide)
+            binding.llColor.visibility = View.INVISIBLE
+        }
+        binding.imvShowColor.visibility = View.VISIBLE
     }
     override fun onBackPressed() {
         var dialog = DialogExit(

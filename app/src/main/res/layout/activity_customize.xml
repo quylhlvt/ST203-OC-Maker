@@ -116,7 +116,7 @@
             android:layout_marginBottom="28dp"
             android:layout_marginEnd="20dp"
             android:src="@drawable/imv_random"
-            app:layout_constraintBottom_toTopOf="@+id/llNav"
+            app:layout_constraintBottom_toTopOf="@+id/img_bgnav"
             app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -128,12 +128,12 @@
             android:layout_marginBottom="17dp"
             android:elevation="2dp"
             android:src="@drawable/imv_color"
-            app:layout_constraintBottom_toTopOf="@+id/llNav"
+            app:layout_constraintBottom_toTopOf="@+id/img_bgnav"
             app:layout_constraintStart_toStartOf="parent" />
         <androidx.appcompat.widget.AppCompatImageView
             android:visibility="invisible"
             android:id="@+id/imvNoColor"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:layout_height="0dp"
             android:elevation="2dp"
             app:layout_constraintDimensionRatio="1:1"
@@ -155,7 +155,7 @@
             <LinearLayout
                 android:layout_gravity="bottom"
                 android:id="@+id/llColor"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:elevation="1dp"
                 android:gravity="center"
@@ -173,7 +173,6 @@
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:layout_gravity="center"
-                            android:layout_marginHorizontal="13dp"
                             android:clipToPadding="false"
                             android:orientation="vertical"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -188,14 +187,13 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.78" />
+            app:layout_constraintGuide_percent="0.76" />
 
         <LinearLayout
 
             android:id="@+id/llPart"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/img_frame_bg_layer_custom"
             android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -217,13 +215,27 @@
                 tools:listitem="@layout/item_part" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/img_bgnav"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_nav_custom"
+            app:layout_constraintBottom_toTopOf="@+id/llPart"
+            app:layout_constraintEnd_toEndOf="@id/llNav"
+            app:layout_constraintStart_toStartOf="@id/llNav"
+            app:layout_constraintTop_toTopOf="@+id/llNav" />
         <LinearLayout
             android:id="@+id/llNav"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:background="@drawable/bg_nav_custom"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginHorizontal="25dp"
+            android:paddingHorizontal="5dp"
             android:gravity="center"
-            app:layout_constraintBottom_toTopOf="@+id/llPart">
+            app:layout_constraintBottom_toTopOf="@+id/llPart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcvNav"
@@ -231,7 +243,6 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:orientation="horizontal"
-                android:paddingStart="20dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="10"
                 tools:listitem="@layout/item_navigation" />
@@ -288,7 +299,7 @@
                             android:layout_marginHorizontal="0dp"
                             android:textSize="18sp"
                             android:textColor="@color/white"
-                            android:fontFamily="@font/nunito_bold"
+                            android:fontFamily="@font/crimson_text_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/loading"/>
@@ -299,7 +310,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
-                        android:fontFamily="@font/nunito_regular"
+                        android:fontFamily="@font/crimsontext_regular"
                         android:gravity="center"
                         android:text="@string/wait_a_few_second"
                         android:textSize="16dp"
@@ -331,7 +342,7 @@
                         android:gravity="center"
                         android:text="@string/no"
                         android:textColor="@color/app_color"
-                        android:fontFamily="@font/nunito_regular"
+                        android:fontFamily="@font/crimsontext_regular"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintDimensionRatio="1.01:0.36"
                         app:layout_constraintEnd_toStartOf="@+id/btnYes"
@@ -348,7 +359,7 @@
                         android:text="@string/tv_yes"
                         android:textColor="@color/white"
                         android:layout_marginEnd="20dp"
-                        android:fontFamily="@font/nunito_regular"
+                        android:fontFamily="@font/crimsontext_regular"
                         app:layout_constraintDimensionRatio="1.01:0.36"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/btnNo"

@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.60" />
+            app:layout_constraintGuide_percent="0.76" />
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -71,10 +71,11 @@
         <com.ocmaker.fullbody.creator.custom.DrawView
             android:id="@+id/drawView"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="80dp"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layerType="hardware"
-            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintDimensionRatio="3:4.68"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/guideline_vertical"
@@ -86,21 +87,33 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop" />
         </com.ocmaker.fullbody.creator.custom.DrawView>
+
         <ImageView
             android:id="@+id/navBottom"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:src="@drawable/bg_nav_bg"
+            android:layout_width="0dp"
+            android:layout_height="46dp"
             android:gravity="center"
             android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            android:src="@drawable/bg_nav_bg"
+            app:layout_constraintTop_toTopOf="@id/llBottom"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/llBottom" />
+
         <LinearLayout
             android:id="@+id/llBottom"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_width="0dp"
+            android:layout_height="66dp"
             android:gravity="center"
+            android:elevation="2dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_marginHorizontal="25dp"
+            android:paddingHorizontal="25dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_vertical">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/btnBg"
@@ -135,10 +148,11 @@
             android:id="@+id/ctl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/llBottom"
+            app:layout_constraintBottom_toBottomOf="parent
+"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline_vertical">
+            app:layout_constraintTop_toBottomOf="@+id/llBottom">
 
             <LinearLayout
                 android:id="@+id/llBG"
@@ -233,9 +247,9 @@
                         android:id="@+id/titleFame"
                         android:layout_width="0dp"
                         android:layout_height="41dp"
+                        android:elevation="4dp"
                         android:background="@drawable/bg_title_dialog"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:elevation="1dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
                         <TextView
@@ -245,8 +259,9 @@
                             android:gravity="center"
                             android:layout_marginHorizontal="0dp"
                             android:textSize="18sp"
-                            android:textColor="@color/app_color"
-                            android:fontFamily="@font/nunito_bold"
+                            android:elevation="4dp"
+                            android:textColor="@color/white"
+                            android:fontFamily="@font/crimson_text_bold"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="@string/loading"/>
@@ -257,11 +272,12 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="20dp"
-                        android:fontFamily="@font/nunito_regular"
+                        android:fontFamily="@font/crimsontext_regular"
                         android:gravity="center"
                         android:text="@string/wait_a_few_second"
-                        android:textColor="@color/white"
+                        android:textColor="@color/app_color"
                         android:textSize="16dp"
+                        android:elevation="4dp"
                         app:layout_constraintBottom_toTopOf="@+id/btnNo"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -289,8 +305,9 @@
                             android:background="@drawable/bg_8_color"
                             android:gravity="center"
                             android:text="@string/no"
+                            android:elevation="4dp"
                             android:textColor="@color/app_color"
-                            android:fontFamily="@font/nunito_regular"
+                            android:fontFamily="@font/crimsontext_regular"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toStartOf="@+id/btnYes"
@@ -304,10 +321,11 @@
                             android:layout_height="36dp"
                             android:background="@drawable/bg_btn_loading_yes"
                             android:gravity="center"
+                            android:elevation="4dp"
                             android:text="@string/tv_yes"
                             android:textColor="@color/white"
                             android:layout_marginEnd="20dp"
-                            android:fontFamily="@font/nunito_regular"
+                            android:fontFamily="@font/crimsontext_regular"
                             app:layout_constraintDimensionRatio="1.01:0.36"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@+id/btnNo"
