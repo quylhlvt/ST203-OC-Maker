@@ -33,7 +33,7 @@ class TutorialActivity : AbsBaseActivity<ActivityTutorialBinding>() {
 
     override fun initView() {
 
-        var data = arrayListOf<TutorialModel>(
+        var data = arrayListOf(
             TutorialModel(
                 R.drawable.img_intro1,
                 getString(R.string.intro1)
