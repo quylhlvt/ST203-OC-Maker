@@ -7,17 +7,17 @@
         android:layout_height="match_parent"
         android:background="@drawable/img_bg_splash">
 
-        <TextView
+        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
             android:layout_width="match_parent"
             android:id="@+id/titlePermission"
             android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
-            android:fontFamily="@font/crimsontext_regular"
+            android:fontFamily="@font/cherry_bomb_one_regular"
             android:text="@string/permission"
-            android:textColor="@color/app_color2"
-            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textSize="28sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:strokeColor="@color/app_color"
@@ -29,7 +29,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imv"
-            android:layout_width="126dp"
+            android:layout_width="211dp"
             android:layout_marginTop="36dp"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
@@ -45,6 +45,7 @@
             android:layout_marginHorizontal="28dp"
             android:paddingHorizontal="5dp"
             android:paddingVertical="18dp"
+            android:layout_marginTop="-4dp"
             android:textSize="14sp"
             android:gravity="center"
             android:background="@drawable/bg_20_solid_white_stroke_blue"
@@ -81,7 +82,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:fontFamily="@font/crimson_text_semi_bold"
+                        android:fontFamily="@font/nunito_semi_bold"
                         android:gravity="center"
                         android:text="@string/storage"
                         android:textColor="@color/white"
@@ -117,7 +118,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="16dp"
-                        android:fontFamily="@font/crimson_text_semi_bold"
+                        android:fontFamily="@font/nunito_semi_bold"
                         android:gravity="center"
                         android:text="@string/notifications"
                         android:textColor="@color/white"
@@ -140,16 +141,15 @@
             android:id="@+id/btnContinue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="206dp"
-            android:fontFamily="@font/crimson_text_semi_bold"
+            android:fontFamily="@font/nunito_medium"
             android:gravity="center"
             android:padding="10dp"
+            android:layout_marginBottom="140dp"
             android:text="@string/continue2"
-            android:textColor="@color/app_color2"
-            android:textSize="18sp"
+            android:textColor="@color/app_color"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

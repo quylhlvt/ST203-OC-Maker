@@ -42,7 +42,7 @@
                 android:id="@+id/btnNext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/crimson_text_semi_bold"
+                android:fontFamily="@font/nunito_medium"
                 android:gravity="center"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="6dp"

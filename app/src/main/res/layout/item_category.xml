@@ -9,15 +9,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-<com.google.android.material.card.MaterialCardView
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="16dp"
     app:strokeWidth="0dp"
     android:background="@color/transparent"
-    android:layout_marginHorizontal="5dp"
+    android:layout_marginHorizontal="8dp"
     app:cardElevation="3dp"
-    android:layout_marginBottom="18dp"
+    android:layout_marginBottom="8dp"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1.56:2.1"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -49,8 +49,8 @@
                     android:id="@+id/imv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/img_intro1" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_per" />
 
             </com.google.android.material.card.MaterialCardView>
 

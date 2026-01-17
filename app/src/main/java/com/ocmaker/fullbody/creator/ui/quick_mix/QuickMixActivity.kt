@@ -1,8 +1,13 @@
 package com.ocmaker.fullbody.creator.ui.quick_mix
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Rect
+import android.graphics.RectF
+import android.util.Log
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.ocmaker.fullbody.creator.R
 import com.ocmaker.fullbody.creator.base.AbsBaseActivity
 import com.ocmaker.fullbody.creator.databinding.ActivityQuickMixBinding
@@ -18,16 +23,21 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import javax.inject.Inject
+import kotlin.random.Random
 
 @AndroidEntryPoint
 class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
     private var sizeMix = 100
-    private var pageSize = 30
-    private var currentIndex = 0
-    private var isLoading = false   // thêm cờ kiểm soát
-
+    private var isLoading = false
     private val arrMix = arrayListOf<CustomModel>()
+
+    // ✅ Cache tập trung tại Activity
+    val bitmapCache = hashMapOf<Int, Bitmap>()
+    private val imageBitmapCache = hashMapOf<String, Bitmap>() // Cache từng layer
+
     @Inject
     lateinit var apiRepository: ApiRepository
     val adapter by lazy { QuickAdapter(this@QuickMixActivity) }
@@ -41,58 +51,58 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
         } else {
             binding.rcv.itemAnimator = null
             binding.rcv.adapter = adapter
-            if (!isInternetAvailable(this@QuickMixActivity)){
+
+            // ✅ Pass cache reference tới adapter
+            adapter.bitmapCache = bitmapCache
+
+            if (!isInternetAvailable(this@QuickMixActivity)) {
                 sizeMix = 25
                 loadOfflineLastCharacter()
-            }else{
-            // load trang đầu tiên
-            loadNextPage()
-            // listener để load thêm khi scroll gần cuối
-            binding.rcv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                    val lastVisible = layoutManager.findLastVisibleItemPosition()
-
-                    // chỉ gọi khi chưa loading và còn dữ liệu
-                    if (!isLoading && lastVisible >= arrMix.size - 5 && currentIndex < sizeMix) {
-                        loadNextPage()
-                    }
-                }
-            })
-        }}
+            } else {
+                loadAllItems()
+            }
+        }
     }
+
     private fun loadOfflineLastCharacter() {
         val lastModel = DataHelper.arrBlackCentered.lastOrNull() ?: return
-        val tempArrMix = arrayListOf<CustomModel>()
-        val tempArrListImageSortView = mutableListOf<ArrayList<String>>()
-        val resultList = mutableListOf<ArrayList<ArrayList<Int>>>()
+        val tempArrMix = ArrayList<CustomModel>(sizeMix)
+        val tempArrListImageSortView = ArrayList<ArrayList<String>>(sizeMix)
+        val resultList = ArrayList<ArrayList<ArrayList<Int>>>(sizeMix)
+        val characterIndices = ArrayList<Int>(sizeMix)
+        val bodyPartSize = lastModel.bodyPart.size
 
         repeat(sizeMix) {
-            val list = ArrayList<String>().apply {
-                repeat(lastModel.bodyPart.size) { add("") }
-            }
+            val list = ArrayList<String>(bodyPartSize)
+            repeat(bodyPartSize) { list.add("") }
+
             lastModel.bodyPart.forEach {
-                val (x, _) = it.icon.substringBeforeLast("/")
+                val parts = it.icon.substringBeforeLast("/")
                     .substringAfterLast("/")
                     .split("-")
-                    .map { it.toInt() }
+                val x = parts[0].toIntOrNull() ?: return@forEach
                 list[x - 1] = it.icon
             }
             tempArrListImageSortView.add(list)
 
-            val i = arrayListOf<ArrayList<Int>>()
+            val i = ArrayList<ArrayList<Int>>(bodyPartSize)
             list.forEach { data ->
-                val x = lastModel.bodyPart.find { it.icon == data }
-                val pair = if (x != null) {
-                    val path = x.listPath[0].listPath
-                    val color = x.listPath
+                val bodyPart = lastModel.bodyPart.find { it.icon == data }
+                val pair = if (bodyPart != null) {
+                    val path = bodyPart.listPath[0].listPath
+                    val color = bodyPart.listPath
+
                     val randomValue = if (path[0] == "none") {
-                        if (path.size > 3) (2 until path.size).random() else 2
+                        val halfSize = (path.size / 3).coerceAtLeast(3)
+                        if (path.size > 3) Random.nextInt(2, halfSize) else 2
                     } else {
-                        if (path.size > 2) (1 until path.size).random() else 1
+                        val halfSize = (path.size / 3).coerceAtLeast(2)
+                        if (path.size > 2) Random.nextInt(1, halfSize) else 1
                     }
-                    val randomColor = (0 until color.size).random()
+
+                    val halfColorSize = (color.size / 2).coerceAtLeast(1)
+                    val randomColor = Random.nextInt(0, halfColorSize)
+
                     arrayListOf(randomValue, randomColor)
                 } else {
                     arrayListOf(-1, -1)
@@ -101,51 +111,66 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
             }
             resultList.add(i)
             tempArrMix.add(lastModel)
+            characterIndices.add(DataHelper.arrBlackCentered.size - 1)
         }
 
         adapter.arrListImageSortView.addAll(tempArrListImageSortView)
         adapter.listArrayInt.addAll(resultList)
+        adapter.characterIndices.addAll(characterIndices)
         arrMix.addAll(tempArrMix)
         adapter.submitList(ArrayList(arrMix))
+
+        // ✅ Load bitmaps sau khi setup data
+        loadBitmapsInBackground()
     }
 
-    private fun loadNextPage() {
-        if (currentIndex >= sizeMix) return
-        isLoading = true  // đánh dấu đang load
+    private fun loadAllItems() {
+        val time = System.currentTimeMillis()
+        if (isLoading) return
+        isLoading = true
 
-        lifecycleScope.launch(Dispatchers.Default) {
-            val tempArrMix = arrayListOf<CustomModel>()
-            val tempArrListImageSortView = mutableListOf<ArrayList<String>>()
-            val resultList = mutableListOf<ArrayList<ArrayList<Int>>>()
+        lifecycleScope.launch(Dispatchers.IO) {
+            val tempArrMix = ArrayList<CustomModel>(sizeMix)
+            val tempArrListImageSortView = ArrayList<ArrayList<String>>(sizeMix)
+            val resultList = ArrayList<ArrayList<ArrayList<Int>>>(sizeMix)
+            val characterIndices = ArrayList<Int>(sizeMix)
+            val modelsCount = DataHelper.arrBlackCentered.size
 
-            val end = (currentIndex + pageSize).coerceAtMost(sizeMix)
-            for (pos in currentIndex until end) {
-                val mModel = DataHelper.arrBlackCentered[pos % DataHelper.arrBlackCentered.size]
+            for (pos in 0 until sizeMix) {
+                val modelIndex = pos % modelsCount
+                val mModel = DataHelper.arrBlackCentered[modelIndex]
+                val bodyPartSize = mModel.bodyPart.size
 
-                val list = ArrayList<String>().apply {
-                    repeat(mModel.bodyPart.size) { add("") }
-                }
+                val list = ArrayList<String>(bodyPartSize)
+                repeat(bodyPartSize) { list.add("") }
+
                 mModel.bodyPart.forEach {
-                    val (x, _) = it.icon.substringBeforeLast("/")
+                    val parts = it.icon.substringBeforeLast("/")
                         .substringAfterLast("/")
                         .split("-")
-                        .map { it.toInt() }
+                    val x = parts[0].toIntOrNull() ?: return@forEach
                     list[x - 1] = it.icon
                 }
                 tempArrListImageSortView.add(list)
 
-                val i = arrayListOf<ArrayList<Int>>()
+                val i = ArrayList<ArrayList<Int>>(bodyPartSize)
                 list.forEach { data ->
-                    val x = mModel.bodyPart.find { it.icon == data }
-                    val pair = if (x != null) {
-                        val path = x.listPath[0].listPath
-                        val color = x.listPath
+                    val bodyPart = mModel.bodyPart.find { it.icon == data }
+                    val pair = if (bodyPart != null) {
+                        val path = bodyPart.listPath[0].listPath
+                        val color = bodyPart.listPath
+
                         val randomValue = if (path[0] == "none") {
-                            if (path.size > 3) (2 until path.size).random() else 2
+                            val halfSize = (path.size / 3).coerceAtLeast(3)
+                            if (path.size > 3) Random.nextInt(2, halfSize) else 2
                         } else {
-                            if (path.size > 2) (1 until path.size).random() else 1
+                            val halfSize = (path.size / 3).coerceAtLeast(2)
+                            if (path.size > 2) Random.nextInt(1, halfSize) else 1
                         }
-                        val randomColor = (0 until color.size).random()
+
+                        val halfColorSize = (color.size / 2).coerceAtLeast(1)
+                        val randomColor = Random.nextInt(0, halfColorSize)
+
                         arrayListOf(randomValue, randomColor)
                     } else {
                         arrayListOf(-1, -1)
@@ -154,31 +179,168 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
                 }
                 resultList.add(i)
                 tempArrMix.add(mModel)
+                characterIndices.add(modelIndex)
             }
 
             withContext(Dispatchers.Main) {
                 adapter.arrListImageSortView.addAll(tempArrListImageSortView)
                 adapter.listArrayInt.addAll(resultList)
+                adapter.characterIndices.addAll(characterIndices)
                 arrMix.addAll(tempArrMix)
-                adapter.submitList(ArrayList(arrMix)) // cập nhật adapter
-                currentIndex = end
-                isLoading = false  // reset cờ sau khi load xong
+                adapter.submitList(ArrayList(arrMix))
+                isLoading = false
+                Log.d("timerLoad", " ${System.currentTimeMillis() - time}")
+
+                // ✅ Bắt đầu load bitmaps ngay sau khi setup xong
+                loadBitmapsInBackground()
             }
+        }
+    }
+
+    // ✅ Load bitmaps song song tối đa tốc độ
+    private fun loadBitmapsInBackground() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val time = System.currentTimeMillis()
+
+            // ✅ Load 10 items đầu tiên song song (visible items)
+            val firstBatch = (0 until minOf(10, sizeMix)).map { position ->
+                async { loadBitmapForPosition(position) }
+            }.awaitAll()
+
+            withContext(Dispatchers.Main) {
+                firstBatch.forEachIndexed { index, bitmap ->
+                    if (bitmap != null) {
+                        bitmapCache[index] = bitmap
+                        adapter.notifyItemChanged(index)
+                    }
+                }
+            }
+
+            // ✅ Load phần còn lại song song theo batch 20 items
+            val batchSize = 20
+            for (start in 10 until sizeMix step batchSize) {
+                val end = minOf(start + batchSize, sizeMix)
+                val batch = (start until end).map { position ->
+                    async { loadBitmapForPosition(position) }
+                }.awaitAll()
+
+                withContext(Dispatchers.Main) {
+                    batch.forEachIndexed { index, bitmap ->
+                        val pos = start + index
+                        if (bitmap != null) {
+                            bitmapCache[pos] = bitmap
+                            adapter.notifyItemChanged(pos)
+                        }
+                    }
+                }
+            }
+
+            Log.d("bitmapLoad", "Total time: ${System.currentTimeMillis() - time}ms")
+        }
+    }
+
+    // ✅ Load bitmap cho 1 position
+    private suspend fun loadBitmapForPosition(position: Int): Bitmap? {
+        return try {
+            val coordSet = adapter.listArrayInt[position]
+            val characterIndex = if (position < adapter.characterIndices.size) {
+                adapter.characterIndices[position]
+            } else {
+                position % DataHelper.arrBlackCentered.size
+            }
+
+            val model = arrMix[position % arrMix.size]
+            val listImageSortView = adapter.arrListImageSortView[position % adapter.arrListImageSortView.size]
+
+            mergeImagesOptimized(model, listImageSortView, coordSet, characterIndex)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
+    }
+
+    // ✅ Merge images với cache tối ưu
+    private suspend fun mergeImagesOptimized(
+        blackCentered: CustomModel,
+        listImageSortView: List<String>,
+        coordSet: ArrayList<ArrayList<Int>>,
+        characterIndex: Int
+    ): Bitmap? = withContext(Dispatchers.IO) {
+        try {
+            val lastIndex = DataHelper.arrBlackCentered.size - 1
+            val (canvasWidth, canvasHeight) = if (isInternetAvailable(this@QuickMixActivity)) {
+                when (characterIndex) {
+                    1, lastIndex -> Pair(270, 480)
+                    else -> Pair(256, 256)
+                }
+            } else {
+                Pair(270, 480)
+            }
+
+            val pool = Glide.get(this@QuickMixActivity).bitmapPool
+            val merged = pool.get(canvasWidth, canvasHeight, Bitmap.Config.ARGB_8888)
+            val canvas = Canvas(merged)
+            val dstRect = RectF(0f, 0f, canvasWidth.toFloat(), canvasHeight.toFloat())
+            val srcRect = Rect()
+
+            // ✅ Load tất cả layers song song
+            val bitmaps = listImageSortView.mapIndexed { index, icon ->
+                async {
+                    val coord = coordSet[index]
+                    if (coord[0] > 0) {
+                        val targetPath = blackCentered.bodyPart
+                            .find { it.icon == icon }
+                            ?.listPath?.getOrNull(coord[1])
+                            ?.listPath?.getOrNull(coord[0])
+
+                        if (!targetPath.isNullOrEmpty()) {
+                            // ✅ Check cache trước
+                            imageBitmapCache[targetPath] ?: run {
+                                val bmp = Glide.with(this@QuickMixActivity)
+                                    .asBitmap()
+                                    .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                    .load(targetPath)
+                                    .encodeQuality(90)
+                                    .submit()
+                                    .get()
+                                imageBitmapCache[targetPath] = bmp
+                                bmp
+                            }
+                        } else null
+                    } else null
+                }
+            }.awaitAll()
+
+            // ✅ Draw tất cả layers lên canvas
+            bitmaps.filterNotNull().forEach { layerBitmap ->
+                srcRect.set(0, 0, layerBitmap.width, layerBitmap.height)
+                canvas.drawBitmap(layerBitmap, srcRect, dstRect, null)
+            }
+
+            merged
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 
     override fun initAction() {
         binding.apply {
             imvBack.onSingleClick { finish() }
-            adapter.onCLick = {
-                val index = it % DataHelper.arrBlackCentered.size
+            adapter.onCLick = { position ->
+                val index = if (position < adapter.characterIndices.size) {
+                    adapter.characterIndices[position]
+                } else {
+                    position % DataHelper.arrBlackCentered.size
+                }
+
                 val model = DataHelper.arrBlackCentered[index]
                 if (model.checkDataOnline) {
                     if (isInternetAvailable(this@QuickMixActivity)) {
                         startActivity(
                             newIntent(applicationContext, CustomviewActivity::class.java)
                                 .putExtra("data", index)
-                                .putExtra("arr", adapter.listArrayInt[it])
+                                .putExtra("arr", adapter.listArrayInt[position])
                         )
                     } else {
                         DialogExit(this@QuickMixActivity, "network").show()
@@ -187,11 +349,19 @@ class QuickMixActivity : AbsBaseActivity<ActivityQuickMixBinding>() {
                     startActivity(
                         newIntent(applicationContext, CustomviewActivity::class.java)
                             .putExtra("data", index)
-                            .putExtra("arr", adapter.listArrayInt[it])
+                            .putExtra("arr", adapter.listArrayInt[position])
                     )
                 }
             }
         }
     }
-}
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // ✅ Clear cache khi destroy
+        bitmapCache.values.forEach { it.recycle() }
+        bitmapCache.clear()
+        imageBitmapCache.values.forEach { it.recycle() }
+        imageBitmapCache.clear()
+    }
+}

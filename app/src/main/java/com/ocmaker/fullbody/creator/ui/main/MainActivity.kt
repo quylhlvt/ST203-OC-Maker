@@ -157,6 +157,7 @@ class MainActivity : AbsBaseActivity<ActivityMainBinding>() {
                                 DataHelper.arrBlackCentered.add(0, dataModel)
                             }
                         }
+
                         checkCallingDataOnline = false
                     }
 

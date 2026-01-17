@@ -46,20 +46,18 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="10dp"
             android:src="@drawable/img_title_home"
-            app:layout_constraintDimensionRatio="360:112"
+            app:layout_constraintDimensionRatio="352:220"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:layout_marginTop="22dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imvSetting"/>
+            app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
 
         <ScrollView
             android:id="@+id/scvMain"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="45dp"
             android:layout_marginBottom="0dp"
             android:elevation="1dp"
             android:scrollbars="none"
@@ -70,38 +68,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-<!--                &lt;!&ndash;            gl05&ndash;&gt;-->
-<!--                <androidx.constraintlayout.widget.Guideline-->
-<!--                    android:id="@+id/gl05"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    app:layout_constraintGuide_percent="0.57" />-->
+                <!--            gl05-->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl05"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_percent="0.57" />
 
                 <!--            gl063-->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/gl04"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnQuickMaker"
-                    app:layout_constraintStart_toStartOf="@+id/btnQuickMaker"
-                    app:layout_constraintTop_toTopOf="@+id/btnQuickMaker" />   <!--            gl063-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/gl063"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintDimensionRatio="1.05:1.32"
                     app:layout_constraintBottom_toBottomOf="@+id/btnCreate"
                     app:layout_constraintEnd_toEndOf="@+id/btnCreate"
                     app:layout_constraintTop_toTopOf="@+id/btnCreate" />
-<!--                &lt;!&ndash;            gl061&ndash;&gt;-->
-<!--                <androidx.constraintlayout.widget.Guideline-->
-<!--                    android:id="@+id/gl061"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical"-->
-<!--                    app:layout_constraintGuide_begin="120dp" />-->
+                <!--            gl063-->
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl061"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="120dp" />
 
                 <!--            btnCreate-->
                 <ImageView
@@ -120,17 +110,16 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:gravity="center"
-                    android:fontFamily="@font/crimson_text_bold"
+                    android:fontFamily="@font/cherry_bomb_one_regular"
                     android:text="@string/pony_maker"
-                    android:textColor="@color/app_color2"
+                    android:textColor="@color/ff5db6"
                     android:textSize="24sp"
-                    android:layout_marginHorizontal="2dp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnCreate"
                     app:layout_constraintEnd_toStartOf="@+id/gl063"
-                    app:layout_constraintStart_toStartOf="@id/btnCreate"
+                    app:layout_constraintStart_toEndOf="@+id/gl061"
                     app:layout_constraintTop_toTopOf="@+id/btnCreate"
                     app:strokeJoinStyle="miter"
-                    app:strokeMiter="1dp"
+                    app:strokeMiter="5dp"
                     style="@style/single_marquee"
                     />
 
@@ -148,22 +137,24 @@
                 <!--            tv2-->
                 <com.ocmaker.fullbody.creator.utils.StrokeTextView
                     android:id="@+id/tv2"
-                    style="@style/single_marquee"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginHorizontal="5dp"
-                    android:fontFamily="@font/crimson_text_bold"
+                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:text="@string/trending_custom"
-                    android:textColor="@color/app_color2"
+                    android:textColor="@color/app_color"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnQuickMaker"
-                    app:layout_constraintEnd_toEndOf="@+id/btnQuickMaker"
-                    app:layout_constraintStart_toEndOf="@+id/gl04"
+                    app:layout_constraintEnd_toEndOf="@+id/gl05"
+                    app:layout_constraintStart_toStartOf="@+id/btnQuickMaker"
                     app:layout_constraintTop_toTopOf="@+id/btnQuickMaker"
+                    android:fontFamily="@font/cherry_bomb_one_regular"
                     app:strokeJoinStyle="miter"
                     app:strokeMiter="5dp"
-                    app:strokeWidth="1dp" />
+                    app:strokeWidth="2dp"
+                    style="@style/single_marquee"
+                    />
 
                 <!--            btnMyAlbum-->
                 <ImageView
@@ -183,17 +174,17 @@
                     android:layout_height="0dp"
                     android:gravity="center"
                     android:text="@string/my_work"
-                    android:textColor="@color/app_color2"
+                    android:textColor="@color/_0091b2"
                     android:textSize="24sp"
                     app:layout_constraintBottom_toBottomOf="@+id/btnMyAlbum"
                     app:layout_constraintEnd_toEndOf="@+id/btnMyAlbum"
                     app:layout_constraintStart_toStartOf="@+id/btnMyAlbum"
                     app:layout_constraintTop_toTopOf="@+id/btnMyAlbum"
                     android:layout_marginHorizontal="5dp"
-                    android:fontFamily="@font/crimson_text_bold"
+                    android:fontFamily="@font/cherry_bomb_one_regular"
                     app:strokeJoinStyle="miter"
                     app:strokeMiter="5dp"
-                    app:strokeWidth="1dp"
+                    app:strokeWidth="2dp"
                     style="@style/single_marquee"
                     />
 

@@ -29,17 +29,17 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <TextView
+        <com.ocmaker.fullbody.creator.utils.StrokeAppCompatTextView
             android:id="@+id/tv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginHorizontal="14dp"
-            android:fontFamily="@font/crimsontext_regular"
+            android:fontFamily="@font/cherry_bomb_one_regular"
             android:gravity="center"
             android:text="@{mTutorialModel.title}"
-            android:textColor="@color/app_color2"
-            android:textSize="24sp"
+            android:textColor="@color/white"
+            android:textSize="28sp"
             android:freezesText="true"
             android:marqueeRepeatLimit="marquee_forever"
             android:singleLine="true"

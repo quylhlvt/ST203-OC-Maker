@@ -361,10 +361,8 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
             imvShowColor.onSingleClick {
                 arrShowColor[adapterNav.posNav] = !arrShowColor[adapterNav.posNav]
                 if (arrShowColor[adapterNav.posNav]) {
-                    imvShowColor.setImageResource(R.drawable.imv_color)
                     llColor.show()
                 } else {
-                    imvShowColor.setImageResource(R.drawable.imv_color_hide)
                     llColor.inhide()
                 }
             }
@@ -495,12 +493,7 @@ class CustomviewActivity : AbsBaseActivity<ActivityCustomizeBinding>() {
                             adapterColor.submitList(listData[adapterNav.posNav].listPath)
                         }
                     }
-                    binding.rcvPart.post {
-                        binding.rcvPart.smoothScrollToPosition(adapterPart.posPath)
-                    }
-                    binding.rcvColor.post {
-                        binding.rcvColor.smoothScrollToPosition(adapterColor.posColor)
-                    }
+
                     binding.root.postDelayed({
                         canSave = true
                         btnSave.alpha = 1f

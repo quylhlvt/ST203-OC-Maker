@@ -69,7 +69,7 @@
             android:id="@+id/cardImv"
             android:layout_marginTop="51dp"
             app:layout_constraintBottom_toTopOf="@+id/tvContent"
-            app:layout_constraintDimensionRatio="2.67:3.46"
+            app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginHorizontal="46dp"
             app:layout_constraintStart_toStartOf="parent"
